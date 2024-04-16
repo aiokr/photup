@@ -1,9 +1,13 @@
 <script setup lang="ts">
-import TheWelcome from '../components/TheWelcome.vue'
+
+let url = "https://flex.tripper.press/flex/flow";
+fetch(url)
+  .then((response) => response.json())
+  .then((data) => console.log(data));
+console.log(url)
 </script>
 
 <template>
-  <main>
-    <TheWelcome />
-  </main>
+  <div>
+  </div>
 </template>
