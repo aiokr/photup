@@ -4,7 +4,7 @@ import { RouterLink, RouterView } from 'vue-router'
 
 <template>
   <div class="w-full h-16 font-mono font-bold text-lg flex justify-center items-center">Photup by FlexType</div>
-  <header class="sticky top-0 left-0 w-full h-14 font-mono shadow-xl bg-white"></header>
+  <header class="sticky top-0 left-0 w-full h-14 font-mono shadow-xl bg-white z-20"></header>
   <section>
     <RouterView />
   </section>
