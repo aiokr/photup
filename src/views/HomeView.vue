@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 import FlowItem from '@/components/FlowItem.vue';
+import { useViewModeStore } from '@/stores/viewMode';
+
+const viewModeStore = useViewModeStore();
 
 // 假设 Item 是数据项的类型，包含 id 和 exif 属性
 interface Item {
@@ -58,9 +61,10 @@ const filteredData = computed(() => {
 </script>
 
 <template>
-  <div class="container max-w-[1200px] mx-auto pb-24">
-    <section v-for="item in filteredData" :key="item.id" class="pt-6">
-      <FlowItem :item="item" />
+  <div class="container max-w-[1200px] mx-auto pb-24 pt-6"
+    :class="viewModeStore.mode === 'grid' ? 'grid grid-cols-3 gap-1 md:gap-2' : '1'">
+    <section v-for="item in filteredData" :key="item.id">
+      <FlowItem :item="item" :mode="viewModeStore.mode" />
     </section>
   </div>
 </template>

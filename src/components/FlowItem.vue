@@ -7,10 +7,16 @@ export default defineComponent({
     item: {
       type: Object as PropType<Item>,
       required: true
+    },
+    mode: {
+      type: String,
+      required: true
     }
   }
   // ...
 });
+
+
 </script>
 
 <script setup lang="ts">
@@ -47,9 +53,10 @@ function formatExposureTime(exposureTime: string) {
 
 <template>
   <div class="flex flex-col">
-    <el-image :src="item.url" :alt="item.title" :height="item.exif.height" :width="item.exif.width" loading="lazy"
-      fit="contain" class="mx-auto max-h-full" />
-    <div class="z-0 text-[10px] text-gray-400">
+    <el-image class="mx-auto" :src="item.url" :alt="item.title" :height="item.exif.height" :width="item.exif.width" lazy
+      :fit="mode === 'grid' ? 'cover' : 'contain'"
+      :class="mode === 'grid' ? 'h-full w-full object-cover object-center aspect-square gridView' : ' max-h-full aspect-[' + item.exif.width / item.exif.height + ']'" />
+    <div class="z-0 text-[10px] text-gray-400 pb-8" :class="mode === 'grid' ? 'hidden' : ''">
       <div
         class="flowItemInfo flex items-start md:items-center justify-start md:justify-center pt-4 md:pt-6 gap-6 whitespace-nowrap overflow-x-auto px-2">
         <div v-if="item.exif.Make && item.exif.Model" class="flex flex-col items-center gap-1">
@@ -96,6 +103,11 @@ function formatExposureTime(exposureTime: string) {
 </style>
 
 <style>
+.gridView .el-image__inner {
+  width: 100%;
+  height: 100%;
+}
+
 .el-image__inner {
   max-height: 80vh;
   width: fit-content;
