@@ -30,8 +30,8 @@ function toggleViewMode() {
         <IconTime />
       </RouterLink>
       <button @click=toggleViewMode()>
-        <IconWaterFall v-if="viewModeStore.mode === 'grid'" />
-        <IconList v-if="viewModeStore.mode === 'list'" />
+        <IconWaterFall v-if="viewModeStore.mode === 'list'" />
+        <IconList v-if="viewModeStore.mode === 'grid'" />
       </button>
     </div>
   </header>
