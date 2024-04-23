@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent, type PropType } from 'vue';
+import { ref, defineComponent, type PropType } from 'vue';
 type Item = any;
 
 export default defineComponent({
@@ -15,7 +15,6 @@ export default defineComponent({
   }
   // ...
 });
-
 
 </script>
 
@@ -58,7 +57,10 @@ function formatExposureTime(exposureTime: string) {
       :class="mode === 'grid' ? 'h-full w-full object-cover object-center aspect-square gridView' : ' max-h-full aspect-[' + item.exif.width / item.exif.height + ']'" />
     <div class="z-0 text-[10px] text-gray-400 pb-8" :class="mode === 'grid' ? 'hidden' : ''">
       <div
-        class="flowItemInfo flex items-start md:items-center justify-start md:justify-center pt-4 md:pt-6 gap-6 whitespace-nowrap overflow-x-auto px-2">
+        class="flowItemInfo flex items-start md:items-center justify-start md:justify-center pt-4 md:pt-6 gap-4 whitespace-nowrap overflow-x-auto px-2">
+        <div v-if="item.info.rating">
+          <el-rate :model-value="item.info.rating" disabled />
+        </div>
         <div v-if="item.exif.Make && item.exif.Model" class="flex flex-col items-center gap-1">
           <span>相机</span>
           <span>{{ item.exif.Make }} {{ item.exif.Model }}</span>
@@ -79,7 +81,7 @@ function formatExposureTime(exposureTime: string) {
           <span>拍摄时间</span>
           <span>{{ new Date(item.exif.DateTimeOriginal).toLocaleString("default") }}</span>
         </div>
-        <div class="absolute md:static right-0 h-[34px] bg-white flex items-center justify-center">
+        <div class="absolute md:static right-0 h-[34px] pl-1 bg-gradient-to-r from-white/0 via-white to-white flex items-center justify-center">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 48 48" class="w-5 h-5 m-2">
             <circle fill="currentColor" r="3" cy="24" cx="12" data-follow-fill="currentColor" />
             <circle fill="currentColor" r="3" cy="24" cx="24" data-follow-fill="currentColor" />
@@ -113,5 +115,10 @@ function formatExposureTime(exposureTime: string) {
   width: fit-content;
   object-fit: contain;
   margin: 0 auto;
+}
+
+.el-rate {
+  --el-rate-disabled-void-color: #f8fafc !important;
+  --el-rate-fill-color: #cbd5e1 !important;
 }
 </style>

@@ -61,7 +61,7 @@ const filteredData = computed(() => {
 </script>
 
 <template>
-  <div class="container max-w-[1200px] mx-auto pb-24 pt-6"
+  <div class="container max-w-[1200px] mx-auto pb-24 md:pt-6"
     :class="viewModeStore.mode === 'grid' ? 'grid grid-cols-3 gap-1 md:gap-2' : '1'">
     <section v-for="item in filteredData" :key="item.id">
       <FlowItem :item="item" :mode="viewModeStore.mode" />
