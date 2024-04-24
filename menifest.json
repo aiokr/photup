@@ -1,0 +1,84 @@
+﻿{
+  "name": "Photup",
+  "short_name": "Photup",
+  "description": "the Photography By aiokr",
+  "start_url": "/",
+  "id": "/",
+  "categories": [
+    "lifestyle",
+    "magazines",
+    "photo",
+    "travel",
+    "photography"
+  ],
+  "scope": "https://photup.art",
+  "display": "standalone",
+  "background_color": "#fefefe",
+  "theme_color": "#fefefe",
+  "icons": [
+    {
+      "src": "/icon_x96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icon_x128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icon_x144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icon_x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icon_x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icon_x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Home",
+      "url": "/",
+      "description": "Home",
+      "icons": [
+        {
+          "sizes": "96x96",
+          "type": "image/png",
+          "purpose": "maskable",
+          "src": "/star.png"
+        }
+      ]
+    },
+    {
+      "name": "Recent",
+      "url": "/recent",
+      "description": "Recent",
+      "icons": [
+        {
+          "sizes": "96x96",
+          "type": "image/png",
+          "purpose": "maskable",
+          "src": "/recent.png"
+        }
+      ]
+    }
+  ]
+}

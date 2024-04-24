@@ -29,6 +29,7 @@ function toggleViewMode() {
       <RouterLink to="/recent">
         <IconTime />
       </RouterLink>
+      <IconMap />
       <button @click=toggleViewMode()>
         <IconWaterFall v-if="viewModeStore.mode === 'list'"/>
         <IconList v-if="viewModeStore.mode === 'grid'" />

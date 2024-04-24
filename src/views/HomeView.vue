@@ -151,7 +151,7 @@ fetchData(currentPage.value);
 
 <template>
   <div class="container max-w-[1200px] mx-auto md:pt-6 transition-all"
-    :class="viewModeStore.mode === 'grid' ? 'grid grid-cols-3 gap-1 md:gap-2' : ''">
+    :class="viewModeStore.mode === 'grid' ? 'grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-1 md:gap-2' : ''">
     <section v-for="item in filteredData" :key="item.id">
       <FlowItem :item="item" :mode="viewModeStore.mode" />
     </section>
