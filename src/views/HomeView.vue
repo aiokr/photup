@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, computed, nextTick } from 'vue';
 import FlowItem from '@/components/FlowItem.vue';
+import ImageViewer from '@/components/ImageViewer.vue';
 import { useViewModeStore } from '@/stores/viewMode';
 import IconTime from '@/components/icons/IconTime.vue';
 
@@ -30,6 +31,24 @@ interface Item {
 type Props = {
   star?: boolean;
 };
+
+// 添加一个响应式变量来控制模态框的显示
+const isDialogVisible = ref(false);
+const selectedIndex = ref(0);
+
+// 创建一个方法来切换模态框的显示状态
+function toggleDialog(index: number) {
+  selectedIndex.value = index; // 设置当前选中的索引
+  isDialogVisible.value = !isDialogVisible.value; // 切换模态框的显示状态
+
+  if (isDialogVisible.value) {
+    document.body.classList.add('no-scroll');
+    console.log('add no-scroll');
+  } else {
+    document.body.classList.remove('no-scroll');
+    console.log('remove no-scroll');
+  }
+}
 
 const props = defineProps<Props>();
 
@@ -145,6 +164,14 @@ const filteredData = computed(() => {
   }
 });
 
+const viewerUrlList = computed(() => {
+  if (props.star) {
+    return flowData.value.filter(item => item.info?.rating > 4).map(item => item.url);
+  } else {
+    return flowData.value.map(item => item.url);
+  }
+});
+
 fetchData(currentPage.value);
 
 </script>
@@ -152,10 +179,19 @@ fetchData(currentPage.value);
 <template>
   <div class="container max-w-[1200px] mx-auto md:pt-6 transition-all"
     :class="viewModeStore.mode === 'grid' ? 'grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-1 md:gap-2' : ''">
-    <section v-for="item in filteredData" :key="item.id">
-      <FlowItem :item="item" :mode="viewModeStore.mode" />
+    <section v-for="(item, index) in filteredData" :key="item.id">
+      <FlowItem :item="item" :index="index" :mode="viewModeStore.mode" :onToggleDialog="() => toggleDialog(index)" />
     </section>
   </div>
+  <Model v-if="isDialogVisible" @close="toggleDialog(0)" :urList="viewerUrlList" :index="selectedIndex">
+    <div class="modalOverlay" @click="toggleDialog(0)"></div>
+    <div class="flex p-3 text-gray-400">
+      <div @click="toggleDialog(0)">
+        <IconX />
+      </div>
+    </div>
+    <ImageViewer :item="filteredData[selectedIndex]" />
+  </Model>
   <div class="sentinel w-1 h-1 mb-12" id="sentinel"></div>
   <Transition name="fade">
     <div v-if="isLoading" class="pb-14 text-gray-300">
@@ -165,13 +201,29 @@ fetchData(currentPage.value);
 </template>
 
 <style scoped>
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.3s ease-in-out;
+Model {
+  z-index: 999;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
 }
 
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
+.modalOverlay {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background-color: #ffffffee;
+  backdrop-filter: saturate(180%) blur(50px) !important;
+  z-index: -1;
+}
+</style>
+
+<style>
+.no-scroll {
+  overflow: hidden;
 }
 </style>

@@ -21,7 +21,7 @@ function toggleViewMode() {
 
 <template>
   <div class="w-full h-16 font-mono font-bold text-lg flex justify-center items-center">Photup by FlexType</div>
-  <header class="sticky top-0 left-0 w-full shadow-xl bg-[#ffffffd7] backdrop-blur text-gray-300 z-20 text-sm">
+  <header class="sticky top-0 left-0 w-full shadow-xl bg-[#ffffffee] backdrop-blur text-gray-300 z-20 text-sm">
     <div class="container h-12 mg:h-14 mx-auto flex items-center justify-evenly gap-6">
       <RouterLink to="/">
         <IconStar2 />
