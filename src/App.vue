@@ -38,7 +38,9 @@ onMounted(() => {
       <RouterLink to="/recent">
         <IconTime />
       </RouterLink>
-      <IconMap />
+      <RouterLink to="/map">
+        <IconMap />
+      </RouterLink>
     </div>
   </nav>
   <section class="dark:bg-zinc-900 dark:text-gray-50">

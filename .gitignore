@@ -30,3 +30,4 @@ coverage
 *.tsbuildinfo
 .vercel
 components.d.ts
+.env
