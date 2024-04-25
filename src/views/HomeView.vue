@@ -164,14 +164,6 @@ const filteredData = computed(() => {
   }
 });
 
-const viewerUrlList = computed(() => {
-  if (props.star) {
-    return flowData.value.filter(item => item.info?.rating > 4).map(item => item.url);
-  } else {
-    return flowData.value.map(item => item.url);
-  }
-});
-
 fetchData(currentPage.value);
 
 </script>
@@ -185,7 +177,7 @@ fetchData(currentPage.value);
   </div>
   <Transition>
     <Model v-if="isDialogVisible" @close="toggleDialog(0)" :index="selectedIndex">
-      <div class="modalOverlay" @click="toggleDialog(0)"></div>
+      <div class="modalOverlay bg-gray-50 dark:bg-gray-700 dark:text-gray-50" @click="toggleDialog(0)"></div>
       <div class="flex p-3 text-gray-400">
         <div @click="toggleDialog(0)">
           <IconX />
@@ -194,9 +186,12 @@ fetchData(currentPage.value);
       <ImageViewer :item="filteredData[selectedIndex]" />
     </Model>
   </Transition>
-  <div class="sentinel w-1 h-1 mb-12" id="sentinel"></div>
+  <div class="sentinel w-full h-1" id="sentinel"></div>
+  <div class="w-full h-14"></div>
   <div v-if="isLoading" class="pb-14 text-gray-300">
     <IconTime class="loading-icon mx-auto" />
+  </div>
+  <div v-if="!isLoading" class="h-[68px] text-gray-300">
   </div>
 </template>
 
@@ -226,8 +221,6 @@ Model {
   height: 100vh;
   top: 0;
   left: 0;
-  background-color: #ffffffee;
-  backdrop-filter: saturate(180%) blur(50px) !important;
   z-index: -1;
 }
 </style>
