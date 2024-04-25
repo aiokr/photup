@@ -183,24 +183,34 @@ fetchData(currentPage.value);
       <FlowItem :item="item" :index="index" :mode="viewModeStore.mode" :onToggleDialog="() => toggleDialog(index)" />
     </section>
   </div>
-  <Model v-if="isDialogVisible" @close="toggleDialog(0)" :urList="viewerUrlList" :index="selectedIndex">
-    <div class="modalOverlay" @click="toggleDialog(0)"></div>
-    <div class="flex p-3 text-gray-400">
-      <div @click="toggleDialog(0)">
-        <IconX />
+  <Transition>
+    <Model v-if="isDialogVisible" @close="toggleDialog(0)" :index="selectedIndex">
+      <div class="modalOverlay" @click="toggleDialog(0)"></div>
+      <div class="flex p-3 text-gray-400">
+        <div @click="toggleDialog(0)">
+          <IconX />
+        </div>
       </div>
-    </div>
-    <ImageViewer :item="filteredData[selectedIndex]" />
-  </Model>
-  <div class="sentinel w-1 h-1 mb-12" id="sentinel"></div>
-  <Transition name="fade">
-    <div v-if="isLoading" class="pb-14 text-gray-300">
-      <IconTime class="loading-icon mx-auto" />
-    </div>
+      <ImageViewer :item="filteredData[selectedIndex]" />
+    </Model>
   </Transition>
+  <div class="sentinel w-1 h-1 mb-12" id="sentinel"></div>
+  <div v-if="isLoading" class="pb-14 text-gray-300">
+    <IconTime class="loading-icon mx-auto" />
+  </div>
 </template>
 
 <style scoped>
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.3s ease-in-out;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
+
 Model {
   z-index: 999;
   position: fixed;

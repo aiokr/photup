@@ -4,7 +4,9 @@ import { RouterLink, RouterView } from 'vue-router';
 import IconStar2 from './components/icons/IconStar2.vue';
 import IconTime from './components/icons/IconTime.vue';
 import IconWaterFall from './components/icons/IconWaterFall.vue';
+import IconMoon from './components/icons/IconMoon.vue';
 import { useViewModeStore } from '@/stores/viewMode';
+import { useColorSchemeStore } from '@/stores/colorScheme';
 
 // 视图模式 View Mode
 const viewModeStore = useViewModeStore();
@@ -16,6 +18,17 @@ onMounted(() => {
 function toggleViewMode() {
   viewModeStore.toggleMode();
 }
+
+const colorSchemeStore = useColorSchemeStore();
+
+onMounted(() => {
+  colorSchemeStore.initializeMode();
+});
+
+function toggleDarkMode() {
+  colorSchemeStore.toggleMode();
+}
+
 
 </script>
 
@@ -31,8 +44,11 @@ function toggleViewMode() {
       </RouterLink>
       <IconMap />
       <button @click=toggleViewMode()>
-        <IconWaterFall v-if="viewModeStore.mode === 'list'"/>
+        <IconWaterFall v-if="viewModeStore.mode === 'list'" />
         <IconList v-if="viewModeStore.mode === 'grid'" />
+      </button>
+      <button @click="toggleDarkMode()">
+        <IconMoon />
       </button>
     </div>
   </header>
