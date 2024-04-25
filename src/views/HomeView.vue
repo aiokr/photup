@@ -43,10 +43,8 @@ function toggleDialog(index: number) {
 
   if (isDialogVisible.value) {
     document.body.classList.add('no-scroll');
-    console.log('add no-scroll');
   } else {
     document.body.classList.remove('no-scroll');
-    console.log('remove no-scroll');
   }
 }
 
@@ -177,7 +175,7 @@ fetchData(currentPage.value);
   </div>
   <Transition>
     <Model v-if="isDialogVisible" @close="toggleDialog(0)" :index="selectedIndex">
-      <div class="modalOverlay bg-gray-50 dark:bg-gray-700 dark:text-gray-50" @click="toggleDialog(0)"></div>
+      <div class="modalOverlay bg-gray-50 dark:bg-zinc-800 dark:text-gray-50" @click="toggleDialog(0)"></div>
       <div class="flex p-3 text-gray-400">
         <div @click="toggleDialog(0)">
           <IconX />

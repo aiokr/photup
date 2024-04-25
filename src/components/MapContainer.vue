@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import mapboxgl from 'mapbox-gl';
+
 import '../../node_modules/mapbox-gl/dist/mapbox-gl.css';
-mapboxgl.accessToken = 'process.env.MAPBOX_API_KEY';
+
+mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_API_KEY;
 
 interface options {
   container: string | HTMLElement;
@@ -15,9 +17,9 @@ const mapContainer = ref();
 const map = ref();
 const mapOptions: options = {
   container: mapContainer.value!,
-  style: 'mapbox://styles/mapbox/streets-v11',
-  center: [0, 0],
-  zoom: 1
+  style: 'mapbox://styles/aiokr/clv6uhepi00lg01og9zb2fh18',
+  center: ['121', '24'],
+  zoom: 3
 };
 
 onMounted(() => {
