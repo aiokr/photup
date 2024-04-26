@@ -66,7 +66,7 @@ function toggleViewMode() {
 <style scoped>
 .v-enter-active,
 .v-leave-active {
-  transition: opacity 0.1s ease-in-out;
+  transition: opacity 0.15s ease-in-out;
 }
 
 .v-enter-from,

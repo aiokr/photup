@@ -83,6 +83,9 @@ const createMap = () => {
   if (mapContainer.value instanceof HTMLElement) {
     mapOptions.container = mapContainer.value;
     map.value = new mapboxgl.Map(mapOptions);
+
+    const nav = new mapboxgl.NavigationControl();
+    map.value.addControl(nav, 'top-right'); // 你可以选择将控件放在地图的其他角落
   } else {
     console.error('Map container HTMLElement not found.');
   }

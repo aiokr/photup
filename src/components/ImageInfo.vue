@@ -80,7 +80,7 @@ function formatExposureTime(exposureTime: string) {
         <span>{{ new Date(item.exif.DateTimeOriginal).toLocaleString("default") }}</span>
       </div>
       <div class="absolute md:static right-0 h-[34px] pl-1 flex items-center justify-center"
-        :class="place === 'flow' ? 'bg-gradient-to-r from-white/0 via-white to-white' : 'hidden'">
+        :class="place === 'flow' ? 'bg-gradient-to-r from-white/0 via-white to-white dark:from-zinc-900/0 dark:via-zinc-900 dark:to-zinc-900' : 'hidden'">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 48 48" class="w-5 h-5 m-2">
           <circle fill="currentColor" r="3" cy="24" cx="12" data-follow-fill="currentColor" />
           <circle fill="currentColor" r="3" cy="24" cx="24" data-follow-fill="currentColor" />

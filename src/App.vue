@@ -7,8 +7,10 @@ import IconMap from './components/icons/IconMap.vue';
 import SiteHeader from './components/SiteHeader.vue';
 import { useColorSchemeStore } from './stores/colorScheme';
 import { isMapView } from '@/stores/isMap';
+import IconSys from './components/icons/IconSys.vue';
 
 const colorScheme = useColorSchemeStore();
+const colorSchemeStore = useColorSchemeStore();
 
 onMounted(() => {
   if (colorScheme.mode === 'system') {
@@ -23,6 +25,10 @@ onMounted(() => {
     document.documentElement.classList.remove('dark');
   }
 });
+
+function toggleColorScheme() {
+  colorSchemeStore.toggleMode();
+}
 
 </script>
 
@@ -46,13 +52,18 @@ onMounted(() => {
   </nav>
   <nav v-if="isMapView().mode == true" class="fixed w-full bottom-12 z-20 flex item-center justify-center">
     <div
-      class="p-3 rounded-full bg-white/90 dark:bg-zinc-950/90 backdrop-blur text-zinc-300 dark:text-zinc-700 z-20 text-sm shadow-lg flex gap-6">
+      class="p-3 rounded-full bg-white/90 dark:bg-zinc-900/90 backdrop-blur text-zinc-300 dark:text-zinc-500 z-20 text-sm shadow-lg flex gap-6">
       <RouterLink to="/">
         <IconStar2 />
       </RouterLink>
       <RouterLink to="/recent">
         <IconTime />
       </RouterLink>
+      <button @click="toggleColorScheme()">
+        <IconMoon v-if="colorScheme.mode === 'dark'" />
+        <IconSun v-if="colorScheme.mode === 'light'" />
+        <IconSys v-if="colorScheme.mode === 'system'" />
+      </button>
     </div>
   </nav>
   <section class="dark:bg-zinc-900 dark:text-gray-50">
