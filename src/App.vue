@@ -6,6 +6,7 @@ import IconTime from './components/icons/IconTime.vue';
 import IconMap from './components/icons/IconMap.vue';
 import SiteHeader from './components/SiteHeader.vue';
 import { useColorSchemeStore } from './stores/colorScheme';
+import { isMapView } from '@/stores/isMap';
 
 const colorScheme = useColorSchemeStore();
 
@@ -26,10 +27,10 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="dark:bg-zinc-950 dark:text-gray-50">
+  <div v-if="isMapView().mode == false" class="dark:bg-zinc-950 dark:text-gray-50">
     <SiteHeader />
   </div>
-  <nav
+  <nav v-if="isMapView().mode == false"
     class="sticky top-0 left-0 w-full shadow-xl bg-white/90 dark:bg-zinc-950/90  backdrop-blur text-zinc-300 dark:text-zinc-700 z-20 text-sm">
     <div class="container h-12 mg:h-14 mx-auto flex items-center justify-evenly gap-6">
       <RouterLink to="/">
@@ -40,6 +41,17 @@ onMounted(() => {
       </RouterLink>
       <RouterLink to="/map">
         <IconMap />
+      </RouterLink>
+    </div>
+  </nav>
+  <nav v-if="isMapView().mode == true" class="fixed w-full bottom-12 z-20 flex item-center justify-center">
+    <div
+      class="p-3 rounded-full bg-white/90 dark:bg-zinc-950/90 backdrop-blur text-zinc-300 dark:text-zinc-700 z-20 text-sm shadow-lg flex gap-6">
+      <RouterLink to="/">
+        <IconStar2 />
+      </RouterLink>
+      <RouterLink to="/recent">
+        <IconTime />
       </RouterLink>
     </div>
   </nav>

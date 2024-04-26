@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import MapContainer from '@/components/MapContainer.vue';
+import { isMapView } from '@/stores/isMap';
 
-
+isMapView().toggleMap(true)
 
 </script>
-
 
 <template>
   <MapContainer class="map-container" />
@@ -12,7 +12,7 @@ import MapContainer from '@/components/MapContainer.vue';
 
 <style scoped>
 .map-container {
-  height: calc(100vh - 48px - 76px);
+  height: 100vh;
   width: 100%;
   flex: 1;
 }

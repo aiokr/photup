@@ -5,7 +5,6 @@ import { useColorSchemeStore } from '@/stores/colorScheme';
 import IconMore from './icons/IconMore.vue';
 import IconMoon from './icons/IconMoon.vue';
 import IconWaterFall from './icons/IconWaterFall.vue';
-
 const isMenuVisible = ref(false);
 const viewModeStore = useViewModeStore();
 const colorSchemeStore = useColorSchemeStore();
@@ -56,7 +55,6 @@ function toggleViewMode() {
                 <IconMoon class="inline-block" /> 亮色模式
               </span>
             </button>
-
           </div>
         </Menu>
       </TransitionGroup>

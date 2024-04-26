@@ -20,6 +20,7 @@ const router = createRouter({
       path: '/map',
       name: 'map',
       component: MapView,
+      props: { isMap: true }
     },
     {
       path: '/about',

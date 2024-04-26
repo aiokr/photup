@@ -3,9 +3,11 @@ import { ref, onMounted, onUnmounted, computed, nextTick } from 'vue';
 import FlowItem from '@/components/FlowItem.vue';
 import ImageViewer from '@/components/ImageViewer.vue';
 import { useViewModeStore } from '@/stores/viewMode';
+import { isMapView } from '@/stores/isMap';
 import IconTime from '@/components/icons/IconTime.vue';
 
 const viewModeStore = useViewModeStore();
+isMapView().toggleMap(false)
 
 // 假设 Item 是数据项的类型，包含 id 和 exif 属性
 interface Item {
