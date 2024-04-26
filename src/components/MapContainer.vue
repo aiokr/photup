@@ -2,15 +2,27 @@
 import { onMounted, ref, watch } from 'vue';
 import { useColorSchemeStore } from '@/stores/colorScheme';
 import mapboxgl from 'mapbox-gl';
+import '../../node_modules/mapbox-gl/dist/mapbox-gl.css';
 
+// 地图配置
+interface options {
+  container: string | HTMLElement;
+  zoom: number;
+  minZoom: number;
+  [key: string]: any;
+}
+
+mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_API_KEY;
+
+// 地图颜色主题
 const colorScheme = useColorSchemeStore();
-const prefersColorSchemeQuery = window.matchMedia('(prefers-color-scheme: dark)');
-console.log(prefersColorSchemeQuery.matches)
+const prefersColorSchemeQuery = window.matchMedia('(prefers-color-scheme: dark)'); // 检测系统颜色
 
 const mapStyleLightUrl = 'mapbox://styles/mapbox/light-v11';
 const mapStyleDarkUrl = 'mapbox://styles/mapbox/dark-v11';
 const mapStyleUrl = ref(mapStyleLightUrl);
 
+// 切换地图颜色主题
 const toggleMapStyle = async () => {
   if (colorScheme.mode === 'system') {
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
@@ -28,24 +40,15 @@ const toggleMapStyle = async () => {
   addMarkers();
 };
 
-prefersColorSchemeQuery.addEventListener('change', toggleMapStyle);
-watch(colorScheme, () => { toggleMapStyle() })
-
-import '../../node_modules/mapbox-gl/dist/mapbox-gl.css';
-
-mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_API_KEY;
-
-interface options {
-  container: string | HTMLElement;
-  zoom: number;
-  minZoom: number;
-  [key: string]: any;
-}
+// 监听系统颜色模式更改
+prefersColorSchemeQuery.addEventListener('change', toggleMapStyle); // 监听系统颜色
+watch(colorScheme, () => { toggleMapStyle() }) // 监听颜色模式，并切换地图模式
 
 let url = `https://flex.tripper.press/flex/flow`;
 let data = ref();
 let isDataLoaded = ref(false);
 
+// 获取数据
 async function fetchData() {
   try {
     const response = await fetch(url);
@@ -59,6 +62,7 @@ async function fetchData() {
 
 fetchData();
 
+// 创建地图
 const mapContainer = ref();
 const markers = ref<mapboxgl.Marker[]>([]);
 const map = ref<mapboxgl.Map | null>(null);
@@ -80,6 +84,7 @@ const createMap = () => {
   }
 };
 
+// 添加标记
 const addMarkers = () => {
   for (const item of data.value) {
     const longitude = parseFloat(item.exif.GPSLongitude);
