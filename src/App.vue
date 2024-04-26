@@ -26,7 +26,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class=" dark:bg-zinc-950 dark:text-gray-50">
+  <div class="dark:bg-zinc-950 dark:text-gray-50">
     <SiteHeader />
   </div>
   <nav

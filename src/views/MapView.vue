@@ -1,18 +1,7 @@
 <script setup lang="ts">
 import MapContainer from '@/components/MapContainer.vue';
 
-let url = `https://flex.tripper.press/flex/flow`;
 
-async function fetchData() {
-  fetch(url)
-    .then(response => response.json())
-    .then(data => {
-      console.log(data);
-    })
-    .catch(error => {
-      console.error(error);
-    });
-}
 
 </script>
 

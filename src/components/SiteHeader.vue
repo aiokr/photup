@@ -31,7 +31,7 @@ function toggleViewMode() {
 
 <template>
   <div class="container max-w-[1200px] mx-auto flex items-center py-6 px-6 md:px-4 lg:px-0">
-    <h1 class="text-xl mr-auto">Photup Art</h1>
+    <h1 class="text-lg font-mono mr-auto">Photup Art</h1>
     <div @click="toggleMenu" class="relative">
       <IconMore />
       <TransitionGroup>
