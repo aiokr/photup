@@ -44,15 +44,19 @@ const toggleMapStyle = async () => {
 prefersColorSchemeQuery.addEventListener('change', toggleMapStyle); // 监听系统颜色
 watch(colorScheme, () => { toggleMapStyle() }) // 监听颜色模式，并切换地图模式
 
+interface dataType {
+  [key: string]: any
+}
+
 let url = `https://flex.tripper.press/flex/flow`;
-let data = ref();
+let data: dataType[] = [];
 let isDataLoaded = ref(false);
 
 // 获取数据
 async function fetchData() {
   try {
     const response = await fetch(url);
-    data.value = await response.json();
+    data = await response.json();
     isDataLoaded.value = true;
     addMarkers();
   } catch (error) {
@@ -86,7 +90,7 @@ const createMap = () => {
 
 // 添加标记
 const addMarkers = () => {
-  for (const item of data.value) {
+  for (const item of data) {
     const longitude = parseFloat(item.exif.GPSLongitude);
     if (longitude > 0) {
       const markerElement = document.createElement('div');
