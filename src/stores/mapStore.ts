@@ -5,7 +5,6 @@ export const isMapView = defineStore('isMap', {
     mode: false
   }),
   actions: {
-
     toggleMap(value: boolean) {
       if (value === true) {
         this.mode = true;
@@ -17,3 +16,12 @@ export const isMapView = defineStore('isMap', {
     }
   }
 })
+
+export const mapLocateTo = defineStore('mapLocateTo', {
+  state: () => ({}),
+  actions: {
+    locateTo(lon: number, lat: number, zoom: number) {
+      this.$state = { lon, lat, zoom };
+    }
+  } 
+});

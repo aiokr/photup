@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import MapContainer from '@/components/MapContainer.vue';
-import { isMapView } from '@/stores/isMap';
+import { isMapView } from '@/stores/mapStore';
 
 isMapView().toggleMap(true)
 
@@ -8,6 +8,7 @@ isMapView().toggleMap(true)
 
 <template>
   <MapContainer class="map-container" />
+  <div class="fixed"></div>
 </template>
 
 <style scoped>

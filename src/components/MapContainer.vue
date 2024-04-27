@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue';
+import { onMounted, ref, watch, defineExpose } from 'vue';
 import { useColorSchemeStore } from '@/stores/colorScheme';
+import { mapLocateTo } from '@/stores/mapStore';
 import mapboxgl from 'mapbox-gl';
 import '../../node_modules/mapbox-gl/dist/mapbox-gl.css';
 
@@ -117,6 +118,30 @@ onMounted(() => {
   createMap();
 });
 
+const useMapLocateTo = mapLocateTo()
+
+useMapLocateTo.$onAction(({ name, args }: { name: string, args: number[] }) => {
+  if (name === 'locateTo') {
+    const [lon, lat, zoom] = args
+    locateTo(lon, lat, zoom)
+  }
+})
+
+function locateTo(lon: number, lat: number, zoom: number) {
+  if (map.value) {
+    map.value.flyTo({
+      center: [lon, lat],
+      zoom: zoom
+    });
+  }
+}
+
+
+
+defineExpose({
+  locateTo
+});
+
 </script>
 
 <template>
@@ -126,5 +151,11 @@ onMounted(() => {
 <style scoped>
 .map-container {
   flex: 1;
+}
+</style>
+
+<style>
+.mapboxgl-ctrl-group {
+  box-shadow: none !important;
 }
 </style>

@@ -3,7 +3,7 @@ import { ref, onMounted, onUnmounted, computed, nextTick } from 'vue';
 import FlowItem from '@/components/FlowItem.vue';
 import ImageViewer from '@/components/ImageViewer.vue';
 import { useViewModeStore } from '@/stores/viewMode';
-import { isMapView } from '@/stores/isMap';
+import { isMapView } from '@/stores/mapStore';
 import IconTime from '@/components/icons/IconTime.vue';
 
 const viewModeStore = useViewModeStore();
