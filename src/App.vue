@@ -144,7 +144,7 @@ const recommendLocations = [
         <IconDown />
       </button>
     </nav>
-    <div v-if="isMapSelected().mode == false" class="overflow-y-auto">
+    <div v-if="isMapSelected().mode == false" class="collapsedContent overflow-y-scroll">
       <div v-for="item in recommendLocations" :key="item.name">
         <div class="text-lg lg:text-xl font-bold pt-4 pb-2">{{ item.name }}</div>
         <div class="grid grid-cols-3 gap-2 lg:flex lg:gap-4 overflow-x-auto">
@@ -157,7 +157,7 @@ const recommendLocations = [
         </div>
       </div>
     </div>
-    <div v-if="isMapSelected().mode == true" class="grid grid-cols-2 gap-2 lg:gap-4">
+    <div v-if="isMapSelected().mode == true" class="collapsedContent grid grid-cols-2 gap-2 lg:gap-4 overflow-y-scroll">
       <div v-for="selectedItem in mapSelectedItem" :key="selectedItem.id">
         <div class="w-full aspect-square object-cover">
           <img class="w-full h-full object-cover rounded-lg" :src="selectedItem.url">
@@ -176,6 +176,10 @@ const recommendLocations = [
 }
 
 .collapsed {
-  height: calc(100vh - 3.5rem);
+  max-height: calc(100vh - 3.5rem);
+}
+
+.collapsedContent {
+  max-height: calc(100vh - 3.5rem - 3.5rem);
 }
 </style>
