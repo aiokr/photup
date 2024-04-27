@@ -40,6 +40,11 @@ const goToLocation = (lon: number, lat: number, zoom: number) => {
   mapStore.locateTo(lon, lat, zoom);
 };
 
+const cleanSelected = () => {
+  isMapSelected().mode = false;
+  isMapSelected().items = [];
+};
+
 let mapSelectedItem: any = ref([]);
 watch(
   () => isMapSelected().items,
@@ -117,6 +122,7 @@ const recommendLocations = [
       </RouterLink>
     </div>
   </nav>
+  <!-- 默认导航栏 -->
   <nav v-if="isMapView().mode == true && isMapCollasped().mode == false"
     class="fixed w-full bottom-12 z-20 flex item-center justify-center">
     <div
@@ -134,37 +140,46 @@ const recommendLocations = [
       </button>
     </div>
   </nav>
-  <div v-if="isMapView().mode == true && isMapCollasped().mode == true"
-    class="collapsed fixed w-full lg:w-96 bottom-0 z-20 p-5 lg:ml-6 justify-center bg-white/90 dark:bg-zinc-800/90 rounded-t-2xl">
-    <nav class="flex item-center justify-start text-zinc-300 dark:text-zinc-500 z-20 text-sm gap-6 pb-3">
-      <RouterLink v-for="item in navItems" :key="item.name" :to="item.path">
-        <component :is="item.icon" />
-      </RouterLink>
-      <button @click="toggleMapCollapsed()">
-        <IconDown />
-      </button>
-    </nav>
-    <div v-if="isMapSelected().mode == false" class="collapsedContent overflow-y-scroll">
-      <div v-for="item in recommendLocations" :key="item.name">
-        <div class="text-lg lg:text-xl font-bold pt-4 pb-2">{{ item.name }}</div>
-        <div class="grid grid-cols-3 gap-2 lg:flex lg:gap-4 overflow-x-auto">
-          <section v-for="location in item.items" :key="location.name"
-            class="h-full w-full aspect-square bg-white/90 dark:bg-zinc-900/90 bg-center bg-cover rounded-lg flex items-end justify-start"
-            :style="`background-image: url(${location.image});`"
-            @click="goToLocation(location.location[0], location.location[1], location.zoom)">
-            <p class="lg:text-lg font-bold text-zinc-50 p-2">{{ location.name }}</p>
-          </section>
+  <!-- 地图导航栏 -->
+  <Transition name="mapNavCollapsed">
+    <div v-if="isMapView().mode == true && isMapCollasped().mode == true"
+      class="collapsed fixed w-full lg:w-96 bottom-0 z-20 p-5 pb-0 lg:ml-6 justify-center bg-white/90 dark:bg-zinc-800/90 rounded-t-2xl shadow-2xl">
+      <nav class="flex item-center justify-start text-zinc-300 dark:text-zinc-500 z-20 text-sm gap-6 pb-4">
+        <RouterLink v-for="item in navItems" :key="item.name" :to="item.path">
+          <component :is="item.icon" />
+        </RouterLink>
+        <button class="ml-auto" @click="toggleMapCollapsed(); cleanSelected()">
+          <IconDown />
+        </button>
+      </nav>
+      <Transition name="mapSelected" mode="out-in">
+        <!--展开导航栏-推荐地点-->
+        <div v-if="isMapSelected().mode == false" class="collapsedContent overflow-y-scroll pb-5">
+          <div v-for="item in recommendLocations" :key="item.name">
+            <div class="text-lg lg:text-xl font-bold pt-4 pb-2">{{ item.name }}</div>
+            <div class="grid grid-cols-3 gap-2 lg:flex lg:gap-4 overflow-x-auto">
+              <section v-for="location in item.items" :key="location.name"
+                class="h-full w-full aspect-square bg-white/90 dark:bg-zinc-900/90 bg-center bg-cover rounded-lg flex items-end justify-start"
+                :style="`background-image: url(${location.image});`"
+                @click="goToLocation(location.location[0], location.location[1], location.zoom)">
+                <p class="lg:text-lg font-bold text-zinc-50 p-2">{{ location.name }}</p>
+              </section>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-    <div v-if="isMapSelected().mode == true" class="collapsedContent grid grid-cols-2 gap-2 lg:gap-4 overflow-y-scroll">
-      <div v-for="selectedItem in mapSelectedItem" :key="selectedItem.id">
-        <div class="w-full aspect-square object-cover">
-          <img class="w-full h-full object-cover rounded-lg" :src="selectedItem.url">
+        <!--展开导航栏-选中图片-->
+        <div v-else class="collapsedContent grid grid-cols-2 gap-2 lg:gap-4 overflow-y-scroll pb-5">
+          <TransitionGroup name="mapSelected" mode="out-in">
+            <div v-for="selectedItem in mapSelectedItem" :key="selectedItem.id">
+              <div class="w-full aspect-square object-cover">
+                <img class="w-full h-full object-cover rounded-lg" :src="selectedItem.url">
+              </div>
+            </div>
+          </TransitionGroup>
         </div>
-      </div>
+      </Transition>
     </div>
-  </div>
+  </Transition>
   <section class="dark:bg-zinc-900 dark:text-gray-50">
     <RouterView />
   </section>
@@ -176,10 +191,58 @@ const recommendLocations = [
 }
 
 .collapsed {
-  max-height: calc(100vh - 3.5rem);
+  max-height: calc(70vh - 3.5rem);
 }
 
 .collapsedContent {
-  max-height: calc(100vh - 3.5rem - 3.5rem);
+  max-height: calc(70vh - 12rem);
+  scrollbar-width: none;
+  --webkit-scrollbar-width: none;
+}
+
+@meida screen and (min-width: 1024px) {
+  .collapsed {
+    max-height: calc(100vh - 4.5rem);
+  }
+
+  .collapsedContent {
+    max-height: calc(100vh - 12rem);
+  }
+}
+</style>
+
+<style>
+.mapNavCollapsed-enter-from,
+.mapNavCollapsed-leave-to {
+  transform: translateY(100%);
+  /* Start from below the screen */
+}
+
+.mapNavCollapsed-enter-to,
+.mapNavCollapsed-leave-from {
+  transform: translateY(0);
+  /* End at its normal position */
+}
+
+.mapNavCollapsed-enter-active,
+.mapNavCollapsed-leave-active {
+  transition: transform 0.3s ease-in-out;
+}
+
+.mapSelected-enter-from,
+.mapSelected-leave-to {
+  opacity: 0;
+  /* Start from below the screen */
+}
+
+.mapSelected-enter-to,
+.mapSelected-leave-from {
+  opacity: 1;
+  /* End at its normal position */
+}
+
+.mapSelected-enter-active,
+.mapSelected-leave-active {
+  transition: opacity 0.12s ease-in-out;
 }
 </style>
