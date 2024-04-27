@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import { RouterLink, RouterView } from 'vue-router';
 import IconStar2 from './components/icons/IconStar2.vue';
 import IconTime from './components/icons/IconTime.vue';
 import IconMap from './components/icons/IconMap.vue';
 import SiteHeader from './components/SiteHeader.vue';
 import { useColorSchemeStore } from './stores/colorScheme';
-import { isMapView, mapLocateTo } from '@/stores/mapStore';
+import { isMapView, mapLocateTo, isMapCollasped, isMapSelected } from '@/stores/mapStore';
 import IconSys from './components/icons/IconSys.vue';
 import IconUp from './components/icons/IconUp.vue';
 
 const colorSchemeStore = useColorSchemeStore();
-const isMapCollasped = ref(false);
+const mapCollasped = isMapCollasped();
 
 onMounted(() => {
   if (colorSchemeStore.mode === 'system') {
@@ -32,13 +32,23 @@ function toggleColorScheme() {
 }
 
 function toggleMapCollapsed() {
-  isMapCollasped.value = !isMapCollasped.value;
+  mapCollasped.toggleCollapsedMode();
 }
 
 const mapStore = mapLocateTo();
 const goToLocation = (lon: number, lat: number, zoom: number) => {
   mapStore.locateTo(lon, lat, zoom);
 };
+
+let mapSelectedItem: any = ref([]);
+watch(
+  () => isMapSelected().items,
+  (newItems) => {
+    mapSelectedItem.value = newItems;
+    console.log('mapSelectedItem.value', mapSelectedItem.value);
+  },
+  { immediate: true }
+);
 
 const navItems = [
   {
@@ -82,7 +92,7 @@ const recommendLocations = [
       },
       {
         name: '麒麟水库',
-        location: [109.118162, 24.4113809],
+        location: [109.161667, 24.412677],
         zoom: 12,
         image: 'https://imgur.lzmun.com/tricms/1713663117870-20231014_DJI_0070-web.jpg',
       }
@@ -107,7 +117,7 @@ const recommendLocations = [
       </RouterLink>
     </div>
   </nav>
-  <nav v-if="isMapView().mode == true && isMapCollasped == false"
+  <nav v-if="isMapView().mode == true && isMapCollasped().mode == false"
     class="fixed w-full bottom-12 z-20 flex item-center justify-center">
     <div
       class="p-3 rounded-full bg-white/90 dark:bg-zinc-900/90 backdrop-blur text-zinc-300 dark:text-zinc-500 z-20 text-sm shadow-lg flex gap-6">
@@ -124,29 +134,35 @@ const recommendLocations = [
       </button>
     </div>
   </nav>
-  <div v-if="isMapView().mode == true && isMapCollasped == true"
-    class="fixed w-full bottom-0 z-20 p-5 pb-12 justify-center bg-white/90 dark:bg-zinc-800/90 rounded-t-2xl">
+  <div v-if="isMapView().mode == true && isMapCollasped().mode == true"
+    class="collapsed fixed w-full lg:w-96 bottom-0 z-20 p-5 lg:ml-6 justify-center bg-white/90 dark:bg-zinc-800/90 rounded-t-2xl">
     <nav class="flex item-center justify-start text-zinc-300 dark:text-zinc-500 z-20 text-sm gap-6 pb-3">
       <RouterLink v-for="item in navItems" :key="item.name" :to="item.path">
         <component :is="item.icon" />
       </RouterLink>
       <button @click="toggleMapCollapsed()">
-        <IconUp />
+        <IconDown />
       </button>
     </nav>
-    <div class="px-2  max-h-96 overflow-y-auto ">
+    <div v-if="isMapSelected().mode == false" class="overflow-y-auto">
       <div v-for="item in recommendLocations" :key="item.name">
         <div class="text-lg lg:text-xl font-bold pt-4 pb-2">{{ item.name }}</div>
-        <div class="grid grid-cols-3 gap-2 lg:flex lg:gap-6 overflow-x-auto">
+        <div class="grid grid-cols-3 gap-2 lg:flex lg:gap-4 overflow-x-auto">
           <section v-for="location in item.items" :key="location.name"
-            class="h-full lg:h-36 aspect-square bg-white/90 dark:bg-zinc-900/90 shadow-lg rounded-2xl bg-center bg-cover"
+            class="h-full w-full aspect-square bg-white/90 dark:bg-zinc-900/90 bg-center bg-cover rounded-lg flex items-end justify-start"
             :style="`background-image: url(${location.image});`"
             @click="goToLocation(location.location[0], location.location[1], location.zoom)">
-            <p class="text-center lg:text-lg font-bold relative top-16 lg:top-24 text-zinc-50">{{ location.name }}</p>
+            <p class="lg:text-lg font-bold text-zinc-50 p-2">{{ location.name }}</p>
           </section>
         </div>
       </div>
-
+    </div>
+    <div v-if="isMapSelected().mode == true" class="grid grid-cols-2 gap-2 lg:gap-4">
+      <div v-for="selectedItem in mapSelectedItem" :key="selectedItem.id">
+        <div class="w-full aspect-square object-cover">
+          <img class="w-full h-full object-cover rounded-lg" :src="selectedItem.url">
+        </div>
+      </div>
     </div>
   </div>
   <section class="dark:bg-zinc-900 dark:text-gray-50">
@@ -157,5 +173,9 @@ const recommendLocations = [
 <style scoped>
 .router-link-exact-active {
   @apply text-zinc-400;
+}
+
+.collapsed {
+  height: calc(100vh - 3.5rem);
 }
 </style>
