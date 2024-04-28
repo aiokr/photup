@@ -99,11 +99,12 @@ const addMarkers = () => {
     const longitude = parseFloat(item.exif.GPSLongitude);
     if (longitude !== 0) {
       const markerElement = document.createElement('div');
+      const mainColor = item.info.mainColor[0];
       markerElement.dataset.id = item.id;
       markerElement.dataset.url = item.url;
       markerElement.innerHTML = `
         <svg width="15" height="15" viewBox="0 0 48 48" fill="none" class="w-3 h-3" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="24" cy="24" r="20" fill="#71afdd90" stroke="#fefefe" stroke-width="6" />
+          <circle cx="24" cy="24" r="20" fill="${mainColor}" stroke="#fefefe" stroke-width="6" />
         </svg>
       `;
       const marker = new mapboxgl.Marker({
