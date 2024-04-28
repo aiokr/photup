@@ -92,7 +92,6 @@ async function fetchData(page: number) {
       }
       throw new Error(`Error: ${response.status}`); // 抛出其他错误
     }
-
     const data: Item[] = await response.json();
 
     if (data.length === 0) {

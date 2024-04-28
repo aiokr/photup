@@ -4,4 +4,7 @@
 
 /* color palette from <https://github.com/vuejs/theme> */
 
-body {}
+:root {
+  color: #232031;
+  --main-color: #71afdd;
+}
