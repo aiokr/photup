@@ -190,17 +190,22 @@ const recommendLocations = [
   @apply text-zinc-400;
 }
 
-.collapsed {
-  max-height: calc(70vh - 3.5rem);
-}
-
 .collapsedContent {
-  max-height: calc(70vh - 12rem);
   scrollbar-width: none;
   --webkit-scrollbar-width: none;
 }
 
-@meida screen and (min-width: 1024px) {
+@media screen and (max-width: 1023px) {
+  .collapsed {
+    max-height: calc(70vh - 3.5rem);
+  }
+
+  .collapsedContent {
+    max-height: calc(70vh - 12rem);
+  }
+}
+
+@media screen and (min-width: 1024px) {
   .collapsed {
     max-height: calc(100vh - 4.5rem);
   }
