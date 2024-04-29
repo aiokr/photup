@@ -204,6 +204,12 @@ fetchData(currentPage.value);
 .v-leave-to {
   opacity: 0;
 }
+</style>
+
+<style>
+.no-scroll {
+  overflow: hidden;
+}
 
 Model {
   z-index: 999;
@@ -221,11 +227,5 @@ Model {
   top: 0;
   left: 0;
   z-index: -1;
-}
-</style>
-
-<style>
-.no-scroll {
-  overflow: hidden;
 }
 </style>

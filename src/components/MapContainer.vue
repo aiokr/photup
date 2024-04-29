@@ -47,6 +47,12 @@ watch(colorScheme, () => { toggleMapStyle() }) // 监听颜色模式，并切换
 
 interface dataType {
   [key: string]: any
+  exif: {
+    [key: string]: any
+  }
+  info: {
+    [key: string]: any
+  }
 }
 
 let url = `https://flex.tripper.press/flex/flow`;
@@ -102,6 +108,8 @@ const addMarkers = () => {
       const mainColor = item.info.mainColor[0];
       markerElement.dataset.id = item.id;
       markerElement.dataset.url = item.url;
+      markerElement.dataset.exif = JSON.stringify(item.exif);
+      markerElement.dataset.info = JSON.stringify(item.info);
       markerElement.innerHTML = `
         <svg width="15" height="15" viewBox="0 0 48 48" fill="none" class="w-3 h-3" xmlns="http://www.w3.org/2000/svg">
           <circle cx="24" cy="24" r="20" fill="${mainColor}" stroke="#fefefe" stroke-width="6" />
@@ -184,7 +192,9 @@ const onClick = (e: mapboxgl.MapMouseEvent & mapboxgl.EventData) => {
         longitude: markerLngLat.lng,
         latitude: markerLngLat.lat,
         id: markerId,
-        url: encodeURI(markerUrl)
+        url: encodeURI(markerUrl),
+        exif: JSON.parse(marker.getElement().dataset.exif || '{}'),
+        info: JSON.parse(marker.getElement().dataset.info || '{}'),
       });
     }
   });

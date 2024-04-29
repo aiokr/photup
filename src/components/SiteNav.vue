@@ -76,6 +76,23 @@ watch(
   { immediate: true }
 );
 
+
+const isDialogVisible = ref(false);
+const selectedIndex = ref(0);
+
+function toggleDialog(index: number) {
+  selectedIndex.value = index;
+  console.log('selectedIndex.value', selectedIndex.value);
+
+  isDialogVisible.value = !isDialogVisible.value;
+
+  if (isDialogVisible.value) {
+    document.body.classList.add('no-scroll');
+  } else {
+    document.body.classList.remove('no-scroll');
+  }
+}
+
 </script>
 <template>
   <!-- 默认导航栏 -->
@@ -137,8 +154,8 @@ watch(
         <!--展开导航栏-选中图片-->
         <div v-else class="collapsedContent grid grid-cols-2 gap-2 lg:gap-4 overflow-y-scroll pb-5">
           <TransitionGroup name="mapSelected" mode="out-in">
-            <div v-for="selectedItem in mapSelectedItem" :key="selectedItem.id">
-              <div class="w-full aspect-square object-cover">
+            <div v-for="(selectedItem, index) in mapSelectedItem" :key="index">
+              <div class="w-full aspect-square object-cover" @click="toggleDialog(index)">
                 <img class="w-full h-full object-cover rounded-lg" :src="selectedItem.url">
               </div>
             </div>
@@ -146,6 +163,18 @@ watch(
         </div>
       </Transition>
     </div>
+  </Transition>
+  <Transition>
+    <Model v-if="isDialogVisible" @close="toggleDialog(0)" :index="selectedIndex">
+      <div class="modalOverlay bg-gray-50 dark:bg-zinc-800 dark:text-gray-50" @click="toggleDialog(0)">
+      </div>
+      <div class="flex p-3 text-gray-400">
+        <div @click="toggleDialog(0)">
+          <IconX />
+        </div>
+      </div>
+      <ImageViewer :item="mapSelectedItem[selectedIndex]" />
+    </Model>
   </Transition>
 </template>
 
