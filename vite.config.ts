@@ -11,7 +11,13 @@ import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    vue(),
+    vue({
+      template: {
+        compilerOptions: {
+          isCustomElement: (tag) => ['Model','Menu'].includes(tag),
+        }
+      },
+    }),
     vueJsx(),
     VueDevTools(),
     AutoImport({
