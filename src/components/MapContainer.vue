@@ -37,6 +37,7 @@ const toggleMapStyle = async () => {
     mapStyleUrl.value = mapStyleLightUrl;
   }
   mapOptions.style = mapStyleUrl.value;
+  removeMap(); // 移除现有的地图和标记
   createMap();
   addMarkers();
 };
@@ -54,6 +55,21 @@ interface dataType {
     [key: string]: any
   }
 }
+
+// 添加标记之前，移除所有现有的标记
+const clearMarkers = () => {
+  markers.value.forEach((marker) => marker.remove());
+  markers.value = [];
+};
+
+// 创建地图之前，移除旧的地图实例
+const removeMap = () => {
+  if (map.value) {
+    map.value.remove();
+    map.value = null;
+    clearMarkers(); // 清除所有标记
+  }
+};
 
 let url = `https://flex.tripper.press/flex/flow`;
 let data: dataType[] = [];
@@ -87,6 +103,7 @@ const mapOptions: options = {
 };
 
 const createMap = () => {
+  removeMap(); // 确保旧地图被移除
   if (mapContainer.value instanceof HTMLElement) {
     mapOptions.container = mapContainer.value;
     map.value = new mapboxgl.Map(mapOptions);
