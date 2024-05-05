@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent, type PropType } from 'vue';
+import { defineComponent, ref, type PropType } from 'vue';
 
 type Item = any;
 
@@ -50,12 +50,15 @@ function formatExposureTime(exposureTime: string) {
   return exposureTime; // 如果格式不正确，返回原始字符串
 }
 
+const isMetaPanel = ref(false);
+
 </script>
 
 <template>
-  <div class="z-0 text-[10px] text-gray-400 pb-8">
+  <div class="z-0 text-[10px] text-gray-400 pb-8 pt-4 md:pt-6">
     <div
-      class="flowItemInfo flex items-start md:items-center justify-start md:justify-center pt-4 md:pt-6 gap-4 whitespace-nowrap overflow-x-auto px-2">
+      class="flowItemInfo items-start md:items-center justify-start md:justify-center gap-4 whitespace-nowrap overflow-x-auto px-2"
+      :class="place === 'modal' ? 'hidden lg:flex ' : 'flex'">
       <div v-if="item.info.rating">
         <el-rate :model-value="item.info.rating" disabled />
       </div>
@@ -88,11 +91,76 @@ function formatExposureTime(exposureTime: string) {
         </svg>
       </div>
     </div>
+    <div
+      class="lg:hidden px-4 w-full fixed rounded-t-2xl left-0 right-0 bottom-0 bg-zinc-100/80 dark:bg-zinc-900/80 backdrop-blur transition-all"
+      @click="isMetaPanel = !isMetaPanel" :class="{
+        'block': place === 'modal',
+        'hidden lg:flex': place !== 'modal',
+        'collapsed': !isMetaPanel,
+        'expanded': isMetaPanel
+      }">
+      <div class="text-[14px] text-center py-4">照片信息</div>
+      <div class="overflow-y-auto h-[50vh] pb-4">
+        <div class="grid grid-cols-2 gap-5">
+          <div v-if="item.info.rating" class="infoItem">
+            <span>评分</span>
+            <span class="infoItemContent">
+              <el-rate :model-value="item.info.rating" disabled />
+            </span>
+          </div>
+          <div class="infoItem">
+            <span>拍摄时间</span>
+            <span class="infoItemContent">{{ new Date(item.exif.DateTimeOriginal).toLocaleString("default") }}</span>
+
+          </div>
+          <div div v-if="item.exif.Make && item.exif.Model" class="infoItem">
+            <span>相机</span>
+            <span class="infoItemContent">{{ item.exif.Make }} {{ item.exif.Model }}</span>
+          </div>
+          <div v-if="item.info.rating" class="infoItem">
+            <span>镜头</span>
+            <span class="infoItemContent">{{ item.exif.LensModel }}</span>
+          </div>
+          <div class="col-span-2 grid grid-cols-3 gap-4">
+            <div class="infoItem">
+              <span class="text-sm">光圈</span>
+              <span>{{ formatFNumber(item.exif.FNumber) }}</span>
+            </div>
+            <div class="infoItem">
+              <span class="text-sm">快门速度</span>
+              <span>{{ formatExposureTime(item.exif.ExposureTime) }}</span>
+            </div>
+            <div class="infoItem">
+              <span class="text-sm">ISO</span>
+              <span>{{ item.exif.ISO }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <style scoped>
 ::-webkit-scrollbar {
   display: none;
+}
+
+.collapsed {
+  transform: translateY(50vh); /* Start hidden below the screen */
+  transition: transform 0.3s ease-in-out; /* Smooth transition for the transform property */
+}
+
+.expanded {
+  transform: translateY(0); /* Move to the original position */
+}
+
+.infoItem {
+  @apply p-5 aspect-square rounded-xl bg-white dark:bg-zinc-800 flex flex-col justify-between;
+  font-size: 16px;
+}
+
+.infoItemContent {
+  font-size: 20px;
 }
 </style>

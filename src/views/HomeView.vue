@@ -5,6 +5,7 @@ import ImageViewer from '@/components/ImageViewer.vue';
 import { useViewModeStore } from '@/stores/viewMode';
 import { isMapView } from '@/stores/mapStore';
 import IconTime from '@/components/icons/IconTime.vue';
+import IconMore from '@/components/icons/IconMore.vue';
 
 const viewModeStore = useViewModeStore();
 isMapView().toggleMap(false)
@@ -177,9 +178,12 @@ fetchData(currentPage.value);
   <Transition>
     <Model v-if="isDialogVisible" @close="toggleDialog(0)" :index="selectedIndex">
       <div class="modalOverlay bg-gray-50 dark:bg-zinc-800 dark:text-gray-50" @click="toggleDialog(0)"></div>
-      <div class="flex p-3 text-gray-400">
+      <div class="flex p-3 text-gray-400 justify-between">
         <div @click="toggleDialog(0)">
           <IconX />
+        </div>
+        <div @click="toggleDialog(0)">
+          <IconMore />
         </div>
       </div>
       <ImageViewer :item="filteredData[selectedIndex]" />

@@ -4,6 +4,7 @@ import { RouterLink } from 'vue-router';
 import IconMap from '@/components/icons/IconMap.vue';
 import IconSys from '@/components/icons/IconSys.vue';
 import IconUp from '@/components/icons/IconUp.vue';
+import IconMore from '@/components/icons/IconMore.vue';
 import { useColorSchemeStore } from '@/stores/colorScheme';
 import { isMapView, mapLocateTo, isMapCollasped, isMapSelected } from '@/stores/mapStore';
 
@@ -168,9 +169,12 @@ function toggleDialog(index: number) {
     <Model v-if="isDialogVisible" @close="toggleDialog(0)" :index="selectedIndex">
       <div class="modalOverlay bg-gray-50 dark:bg-zinc-800 dark:text-gray-50" @click="toggleDialog(0)">
       </div>
-      <div class="flex p-3 text-gray-400">
+      <div class="flex p-3 text-gray-400 justify-between">
         <div @click="toggleDialog(0)">
           <IconX />
+        </div>
+        <div @click="toggleDialog(0)">
+          <IconMore />
         </div>
       </div>
       <ImageViewer :item="mapSelectedItem[selectedIndex]" />
