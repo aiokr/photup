@@ -99,7 +99,7 @@ const isMetaPanel = ref(false);
         'collapsed': !isMetaPanel,
         'expanded': isMetaPanel
       }">
-      <div class="text-[14px] text-center py-4">照片信息</div>
+      <div class="text-[14px] text-center py-4">{{ item.title || '照片信息' }}</div>
       <div class="overflow-y-auto h-[50vh] pb-4">
         <div class="grid grid-cols-2 gap-5">
           <div v-if="item.info.rating" class="infoItem">

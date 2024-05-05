@@ -16,11 +16,9 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="h-screen">
-    <div class="flex flex-col items-center">
-      <el-image class="w-fit shadow-2xl" :src="item.url" :alt="item.id" :height="item.exif.height"
-        :width="item.exif.width" lazy />
-    </div>
+  <div class="h-screen pb-24 flex flex-col items-center justify-center">
+    <el-image class="w-fit shadow-2xl" :src="item.url" :alt="item.id" :height="item.exif.height"
+      :width="item.exif.width" />
     <ImageInfo :item="item" place="modal" />
   </div>
 </template>
