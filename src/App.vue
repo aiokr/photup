@@ -35,6 +35,12 @@ const recommendLocations = [
         zoom: 8,
         image: 'https://imgur.lzmun.com/tricms/1712675251864-DSC06702im.jpg_itp',
       },
+      {
+        name: '重庆市',
+        location: [107.0539, 29.5904],
+        zoom: 6,
+        image: 'https://imgur.lzmun.com/tricms/1714887197154-DSC04777-web.jpg',
+      }
     ]
   },
   {
