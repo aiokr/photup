@@ -72,7 +72,7 @@ watch(
   () => isMapSelected().items,
   (newItems) => {
     mapSelectedItem.value = newItems;
-    console.log('mapSelectedItem.value', mapSelectedItem.value);
+    // console.log('mapSelectedItem.value', mapSelectedItem.value);
   },
   { immediate: true }
 );

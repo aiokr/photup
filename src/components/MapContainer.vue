@@ -123,6 +123,7 @@ const addMarkers = () => {
     if (longitude !== 0) {
       const markerElement = document.createElement('div');
       const mainColor = item.info.mainColor[0];
+      markerElement.dataset.title = item.title;
       markerElement.dataset.id = item.id;
       markerElement.dataset.url = item.url;
       markerElement.dataset.exif = JSON.stringify(item.exif);
@@ -209,6 +210,7 @@ const onClick = (e: mapboxgl.MapMouseEvent & mapboxgl.EventData) => {
         longitude: markerLngLat.lng,
         latitude: markerLngLat.lat,
         id: markerId,
+        title: marker.getElement().dataset.title || '',
         url: encodeURI(markerUrl),
         exif: JSON.parse(marker.getElement().dataset.exif || '{}'),
         info: JSON.parse(marker.getElement().dataset.info || '{}'),
