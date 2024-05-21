@@ -45,10 +45,18 @@ function toggleMapCollapsed() {
 
 const mapStore = mapLocateTo();
 const goToLocation = (lon: number, lat: number, zoom: number) => {
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({
+    'event': 'click_map_goToLocation',
+    'location': { lon, lat },
+    'zoomLevel': zoom
+  });
   mapStore.locateTo(lon, lat, zoom);
 };
 
 const cleanSelected = () => {
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({ 'event': 'click_map_cleanSelected' });
   isMapSelected().mode = false;
   isMapSelected().items = [];
 };
