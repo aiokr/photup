@@ -2,8 +2,7 @@
 import { onMounted, ref, computed } from 'vue';
 import { useRoute } from 'vue-router';
 import ImageViewer from '@/components/ImageViewer.vue';
-import { useViewModeStore } from '@/stores/viewMode';
-import { isMapView } from '@/stores/mapStore';
+import { isImageView } from '@/stores/viewMode';
 
 const route = useRoute();
 
@@ -27,7 +26,7 @@ onMounted(async () => {
   }
 });
 
-console.log(imageData);
+isImageView().toggleImageView(true);
 
 </script>
 

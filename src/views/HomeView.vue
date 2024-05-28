@@ -2,13 +2,14 @@
 import { ref, onMounted, onUnmounted, computed, nextTick } from 'vue';
 import FlowItem from '@/components/FlowItem.vue';
 import ImageViewer from '@/components/ImageViewer.vue';
-import { useViewModeStore } from '@/stores/viewMode';
+import { isImageView, useViewModeStore } from '@/stores/viewMode';
 import { isMapView } from '@/stores/mapStore';
 import IconTime from '@/components/icons/IconTime.vue';
 import IconMore from '@/components/icons/IconMore.vue';
 
 const viewModeStore = useViewModeStore();
 isMapView().toggleMap(false)
+isImageView().toggleImageView(false);
 
 // 假设 Item 是数据项的类型，包含 id 和 exif 属性
 interface Item {
@@ -49,6 +50,12 @@ function toggleDialog(index: number) {
   } else {
     document.body.classList.remove('no-scroll');
   }
+}
+
+// 模态框的菜单
+const isModalMenuVisible = ref(false);
+function toggleModalMenu() {
+  isModalMenuVisible.value = !isModalMenuVisible.value;
 }
 
 const props = defineProps<Props>();
@@ -133,6 +140,15 @@ const onIntersect = (entries: IntersectionObserverEntry[], observer: Intersectio
   }
 };
 
+// 链接写入剪贴板
+
+function copyShareLink(id: any) {
+  const url = `https://photup.art/image/${id}`;
+  navigator.clipboard.writeText(url).then(() => {
+    console.log('Link copied to clipboard');
+  });
+}
+
 // 监听哨兵元素
 onMounted(() => {
   observer.value = new IntersectionObserver(onIntersect, {
@@ -182,10 +198,20 @@ fetchData(currentPage.value);
         <div @click="toggleDialog(0)">
           <IconX />
         </div>
-        <div @click="toggleDialog(0)">
+        <button @click="toggleModalMenu()">
           <IconMore />
-        </div>
+        </button>
       </div>
+      <TransitionGroup>
+        <Menu v-if="isModalMenuVisible">
+          <div class="flex flex-col menuBg py-2 rounded-xl shadow-lg bg-white">
+            <a class="text-center block px-2 py-2 hover:bg-slate-50 dark:hover:bg-slate-700"
+              :href="'/image/' + filteredData[selectedIndex].id" target="_blank">打开独立页面</a>
+            <button class="text-center block px-2 py-2 hover:bg-slate-50 dark:hover:bg-slate-700"
+              @click="copyShareLink(filteredData[selectedIndex].id)">复制分享链接</button>
+          </div>
+        </Menu>
+      </TransitionGroup>
       <ImageViewer :item="filteredData[selectedIndex]" />
     </Model>
   </Transition>
@@ -231,5 +257,14 @@ Model {
   top: 0;
   left: 0;
   z-index: -1;
+}
+
+.menuBg {
+  position: absolute;
+  width: 148px;
+  height: fit-content;
+  right: 24px;
+  top: 24px;
+  z-index: 50;
 }
 </style>

@@ -10,18 +10,21 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: HomeView,
-      props: { star: true }
+      props: { star: true },
+      meta: { title: 'Photup' }
     },
     {
       path: '/recent',
       name: 'recent',
       component: HomeView,
+      meta: { title: 'Recent Photo' }
     },
     {
       path: '/map',
       name: 'map',
       component: MapView,
-      props: { isMap: true }
+      props: { isMap: true },
+      meta: { title: 'Photup Discover' }
     },
     {
       path: '/image/:id',

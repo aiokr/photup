@@ -4,6 +4,7 @@ import IconStar2 from './components/icons/IconStar2.vue';
 import IconTime from './components/icons/IconTime.vue';
 import SiteHeader from './components/SiteHeader.vue';
 import { isMapView } from '@/stores/mapStore';
+import { isImageView } from '@/stores/viewMode';
 import SiteNav from './components/SiteNav.vue';
 
 const navItems = [
@@ -68,8 +69,15 @@ const recommendLocations = [
   <div v-if="isMapView().mode == false" class="dark:bg-zinc-950 dark:text-gray-50">
     <SiteHeader />
   </div>
-  <SiteNav :navItems="navItems" :recommendLocations="recommendLocations" />
+  <SiteNav v-if="isImageView().mode == false" :navItems="navItems" :recommendLocations="recommendLocations" />
   <section class="dark:bg-zinc-900 dark:text-gray-50">
     <RouterView />
   </section>
+  <div v-if="isMapView().mode == false"
+    class="w-full flex justify-center items-center gap-2 text-gray-300 text-xs pb-12">
+    <a href="https://beian.miit.gov.cn/" target="_blank">桂ICP备17001361号</a>
+    <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=45020502000245"
+      target="_blank">桂公网安备45020502000245号
+    </a>
+  </div>
 </template>

@@ -14,3 +14,15 @@ export const useViewModeStore = defineStore('viewMode', {
     },
   },
 });
+
+export const isImageView = defineStore('isImage', {
+  state: () => ({
+    mode: false,
+  }),
+  actions: {
+    toggleImageView(value: boolean) {
+      this.mode = value;
+      localStorage.setItem('isImage', value.toString());
+    },
+  },
+});
