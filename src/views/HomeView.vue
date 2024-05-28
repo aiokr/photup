@@ -141,7 +141,6 @@ const onIntersect = (entries: IntersectionObserverEntry[], observer: Intersectio
 };
 
 // 链接写入剪贴板
-
 function copyShareLink(id: any) {
   const url = `https://photup.art/image/${id}`;
   navigator.clipboard.writeText(url).then(() => {
@@ -206,9 +205,9 @@ fetchData(currentPage.value);
         <Menu v-if="isModalMenuVisible">
           <div class="flex flex-col menuBg py-2 rounded-xl shadow-lg bg-white">
             <a class="text-center block px-2 py-2 hover:bg-slate-50 dark:hover:bg-slate-700"
-              :href="'/image/' + filteredData[selectedIndex].id" target="_blank">打开独立页面</a>
+              :href="'/image/' + filteredData[selectedIndex].id" target="_blank" @click="toggleModalMenu()">打开独立页面</a>
             <button class="text-center block px-2 py-2 hover:bg-slate-50 dark:hover:bg-slate-700"
-              @click="copyShareLink(filteredData[selectedIndex].id)">复制分享链接</button>
+              @click="copyShareLink(filteredData[selectedIndex].id), toggleModalMenu()">复制分享链接</button>
           </div>
         </Menu>
       </TransitionGroup>

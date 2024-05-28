@@ -63,6 +63,10 @@ const recommendLocations = [
   }
 ]
 
+const isCnUrl = () => {
+  return window.location.href.indexOf('lzmun') > -1;
+}
+
 </script>
 
 <template>
@@ -73,11 +77,10 @@ const recommendLocations = [
   <section class="dark:bg-zinc-900 dark:text-gray-50">
     <RouterView />
   </section>
-  <div v-if="isMapView().mode == false"
+  <div v-if="isMapView().mode == false && isCnUrl() == true">
     class="w-full flex justify-center items-center gap-2 text-gray-300 text-xs pb-12">
     <a href="https://beian.miit.gov.cn/" target="_blank">桂ICP备17001361号</a>
     <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=45020502000245"
-      target="_blank">桂公网安备45020502000245号
-    </a>
+      target="_blank">桂公网安备45020502000245号</a>
   </div>
 </template>

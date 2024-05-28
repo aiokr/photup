@@ -102,6 +102,20 @@ function toggleDialog(index: number) {
   }
 }
 
+// 链接写入剪贴板
+function copyShareLink(id: any) {
+  const url = `https://photup.art/image/${id}`;
+  navigator.clipboard.writeText(url).then(() => {
+    console.log('Link copied to clipboard');
+  });
+}
+
+// 模态框的菜单
+const isModalMenuVisible = ref(false);
+function toggleModalMenu() {
+  isModalMenuVisible.value = !isModalMenuVisible.value;
+}
+
 </script>
 <template>
   <!-- 默认导航栏 -->
@@ -181,9 +195,19 @@ function toggleDialog(index: number) {
         <div @click="toggleDialog(0)">
           <IconX />
         </div>
-        <div @click="toggleDialog(0)">
+        <div @click="toggleModalMenu()">
           <IconMore />
         </div>
+        <TransitionGroup>
+          <Menu v-if="isModalMenuVisible">
+            <div class="flex flex-col menuBg py-2 rounded-xl shadow-lg bg-white">
+              <a class="text-center block px-2 py-2 hover:bg-slate-50 dark:hover:bg-slate-700"
+                :href="'/image/' + mapSelectedItem[selectedIndex].id" target="_blank" @click="toggleModalMenu()">打开独立页面</a>
+              <button class="text-center block px-2 py-2 hover:bg-slate-50 dark:hover:bg-slate-700"
+                @click="copyShareLink(mapSelectedItem[selectedIndex].id), toggleModalMenu()">复制分享链接</button>
+            </div>
+          </Menu>
+        </TransitionGroup>
       </div>
       <ImageViewer :item="mapSelectedItem[selectedIndex]" />
     </Model>
@@ -254,5 +278,14 @@ function toggleDialog(index: number) {
 .mapSelected-enter-active,
 .mapSelected-leave-active {
   transition: opacity 0.12s ease-in-out;
+}
+
+.menuBg {
+  position: absolute;
+  width: 148px;
+  height: fit-content;
+  right: 24px;
+  top: 24px;
+  z-index: 50;
 }
 </style>
