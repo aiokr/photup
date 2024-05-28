@@ -203,7 +203,7 @@ fetchData(currentPage.value);
       </div>
       <TransitionGroup>
         <Menu v-if="isModalMenuVisible">
-          <div class="flex flex-col menuBg py-2 rounded-xl shadow-lg bg-white">
+          <div class="flex flex-col menuBg py-2 rounded-xl shadow-lg bg-white text-gray-400">
             <a class="text-center block px-2 py-2 hover:bg-slate-50 dark:hover:bg-slate-700"
               :href="'/image/' + filteredData[selectedIndex].id" target="_blank" @click="toggleModalMenu()">打开独立页面</a>
             <button class="text-center block px-2 py-2 hover:bg-slate-50 dark:hover:bg-slate-700"

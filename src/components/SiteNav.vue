@@ -198,17 +198,18 @@ function toggleModalMenu() {
         <div @click="toggleModalMenu()">
           <IconMore />
         </div>
-        <TransitionGroup>
-          <Menu v-if="isModalMenuVisible">
-            <div class="flex flex-col menuBg py-2 rounded-xl shadow-lg bg-white">
-              <a class="text-center block px-2 py-2 hover:bg-slate-50 dark:hover:bg-slate-700"
-                :href="'/image/' + mapSelectedItem[selectedIndex].id" target="_blank" @click="toggleModalMenu()">打开独立页面</a>
-              <button class="text-center block px-2 py-2 hover:bg-slate-50 dark:hover:bg-slate-700"
-                @click="copyShareLink(mapSelectedItem[selectedIndex].id), toggleModalMenu()">复制分享链接</button>
-            </div>
-          </Menu>
-        </TransitionGroup>
       </div>
+      <TransitionGroup>
+        <Menu v-if="isModalMenuVisible">
+          <div class="flex flex-col menuBg py-2 rounded-xl shadow-lg bg-white text-gray-400">
+            <a class="text-center block px-2 py-2 hover:bg-slate-50 dark:hover:bg-slate-700"
+              :href="'/image/' + mapSelectedItem[selectedIndex].id" target="_blank"
+              @click="toggleModalMenu()">打开独立页面</a>
+            <button class="text-center block px-2 py-2 hover:bg-slate-50 dark:hover:bg-slate-700"
+              @click="copyShareLink(mapSelectedItem[selectedIndex].id), toggleModalMenu()">复制分享链接</button>
+          </div>
+        </Menu>
+      </TransitionGroup>
       <ImageViewer :item="mapSelectedItem[selectedIndex]" />
     </Model>
   </Transition>
@@ -285,7 +286,7 @@ function toggleModalMenu() {
   width: 148px;
   height: fit-content;
   right: 24px;
-  top: 24px;
+  top: 96px;
   z-index: 50;
 }
 </style>

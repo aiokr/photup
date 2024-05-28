@@ -2,9 +2,11 @@
 import { ref, onMounted } from 'vue';
 import { useViewModeStore } from '@/stores/viewMode';
 import { useColorSchemeStore } from '@/stores/colorScheme';
+import { isImageView } from '@/stores/viewMode';
 import IconMore from './icons/IconMore.vue';
 import IconMoon from './icons/IconMoon.vue';
 import IconWaterFall from './icons/IconWaterFall.vue';
+
 const isMenuVisible = ref(false);
 const viewModeStore = useViewModeStore();
 const colorSchemeStore = useColorSchemeStore();
@@ -26,12 +28,16 @@ function toggleViewMode() {
   viewModeStore.toggleMode();
 }
 
+console.log(isImageView().mode);
+
 </script>
 
 <template>
-  <div class="container max-w-[1200px] mx-auto flex items-center py-6 px-6 md:px-4 lg:px-0">
-    <h1 class="text-lg font-bold font-mono mr-auto">Photup Art</h1>
-    <div @click="toggleMenu" class="relative">
+  <div class="container max-w-[1200px] mx-auto flex items-center justify-between py-6 px-6 md:px-4 lg:px-0">
+    <a href="/">
+      <h1 class="text-lg font-bold font-mono mr-auto">Photup Art</h1>
+    </a>
+    <div @click="toggleMenu" class="relative" v-if="isImageView().mode === false">
       <IconMore />
       <TransitionGroup>
         <Menu v-if="isMenuVisible">
