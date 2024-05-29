@@ -9,7 +9,7 @@ import SiteNav from './components/SiteNav.vue';
 
 const navItems = [
   {
-    name: '首页',
+    name: '精选',
     path: '/',
     icon: IconStar2,
   },
@@ -70,13 +70,17 @@ const isCnUrl = () => {
 </script>
 
 <template>
-  <div v-if="isMapView().mode == false" class="dark:bg-zinc-950 dark:text-gray-50">
-    <SiteHeader />
+  <div :class="isMapView().mode == false ? 'flex flex-col md:flex-row relative h-screen w-screen' : 'block'">
+    <div class="dark:bg-zinc-950 dark:text-gray-50"
+      :class="isMapView().mode == false ? 'w-screen h-12 md:h-screen md:w-[233px] pt-4 md:p-8' : 'static'">
+      <SiteHeader v-if="isMapView().mode == false" />
+      <SiteNav :navItems="navItems" :recommendLocations="recommendLocations" />
+    </div>
+    <section class="dark:bg-zinc-900 dark:text-gray-50 max-h-screen overflow-x-auto"
+      :class="isMapView().mode == false ? 'w-full max-w-[calc(100vw-233px)]' : ''">
+      <RouterView />
+    </section>
   </div>
-  <SiteNav v-if="isImageView().mode == false" :navItems="navItems" :recommendLocations="recommendLocations" />
-  <section class="dark:bg-zinc-900 dark:text-gray-50">
-    <RouterView />
-  </section>
   <div v-if="isMapView().mode == false && isCnUrl() == true">
     class="w-full flex justify-center items-center gap-2 text-gray-300 text-xs pb-12">
     <a href="https://beian.miit.gov.cn/" target="_blank">桂ICP备17001361号</a>

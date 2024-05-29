@@ -62,7 +62,7 @@ const props = defineProps<Props>();
 
 const flowData = ref<Item[]>([]);
 const currentPage = ref(1); // 第一页
-const perPage = ref(12);  // 每页加载的数据量
+const perPage = ref(50);  // 每页加载的数据量
 const allDataLoaded = ref(false);
 
 const isLoading = ref(false);
@@ -184,7 +184,7 @@ fetchData(currentPage.value);
 </script>
 
 <template>
-  <div class="container max-w-[1200px] mx-auto md:pt-6 transition-all"
+  <div class="mx-auto md:pt-6 transition-all"
     :class="viewModeStore.mode === 'grid' ? 'grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-1 md:gap-2' : ''">
     <section v-for="(item, index) in filteredData" :key="item.id">
       <FlowItem :item="item" :index="index" :mode="viewModeStore.mode" :onToggleDialog="() => toggleDialog(index)" />

@@ -16,15 +16,15 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="h-screen pb-24 flex flex-col items-center justify-center">
-    <el-image class="w-fit shadow-2xl" :src="item.url" :alt="item.id" :height="item.exif.height"
+  <div class="pt-12 flex flex-col items-center justify-center">
+    <el-image class="w-fit shadow-2xl modalImageViewer" :src="item.url" :alt="item.id" :height="item.exif.height"
       :width="item.exif.width" />
     <ImageInfo :item="item" place="modal" />
   </div>
 </template>
 
-<style scoped>
-.el-image__inner {
+<style>
+.modalImageViewer .el-image__inner {
   max-height: 80vh;
 }
 </style>

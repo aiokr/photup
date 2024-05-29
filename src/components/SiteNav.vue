@@ -120,13 +120,13 @@ function toggleModalMenu() {
 <template>
   <!-- 默认导航栏 -->
   <nav v-if="isMapView().mode == false"
-    class="sticky top-0 left-0 w-full shadow-xl bg-white/90 dark:bg-zinc-950/90  backdrop-blur text-zinc-300 dark:text-zinc-700 z-20 text-sm">
-    <div class="container h-12 mg:h-14 mx-auto flex items-center justify-evenly gap-6">
-      <RouterLink v-for="item in navItems" :key="item.name" :to="item.path">
-        <component :is="item.icon" />
+    class="top-0 left-0 text-zinc-300 dark:text-zinc-700 z-20 text-sm">
+    <div class="container h-12 mg:h-14 mx-auto flex flex-col gap-4">
+      <RouterLink v-for="item in navItems" :key="item.name" :to="item.path" class="flex items-center gap-2">
+       <component :is="item.icon" /> {{ item.name }}
       </RouterLink>
-      <RouterLink to="/map">
-        <IconMap />
+      <RouterLink to="/map" class="flex items-center gap-2">
+        <IconMap /><span>探索</span>
       </RouterLink>
     </div>
   </nav>
@@ -217,7 +217,7 @@ function toggleModalMenu() {
 
 <style scoped>
 .router-link-exact-active {
-  @apply text-zinc-400;
+  @apply text-main;
 }
 
 .collapsedContent {

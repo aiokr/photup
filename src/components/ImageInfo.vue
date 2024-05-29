@@ -55,42 +55,36 @@ const isMetaPanel = ref(false);
 </script>
 
 <template>
-  <div class="z-0 text-[10px] text-gray-400 pb-8 pt-4 md:pt-6">
-    <div
-      class="flowItemInfo items-start md:items-center justify-start md:justify-center gap-4 whitespace-nowrap overflow-x-auto px-2"
-      :class="place === 'modal' ? 'hidden lg:flex ' : 'flex'">
+  <div class="z-0 text-[10px] text-gray-400 pb-8"  :class="place === 'modal' ? 'pt-4 md:pt-6':''">
+    <div class="flowItemInfo items-start justify-start gap-4 whitespace-nowrap overflow-x-auto px-2"
+      :class="place === 'modal' ? 'hidden lg:flex' : 'flex flex-col'">
       <div v-if="item.info.rating">
         <el-rate :model-value="item.info.rating" disabled />
       </div>
-      <div v-if="item.exif.Make && item.exif.Model" class="flex flex-col items-center gap-1">
+      <div v-if="item.exif.Make && item.exif.Model" class="flex flex-col gap-1"
+        :class="place === 'modal' ? 'items-center' : ''">
         <span>相机</span>
         <span>{{ item.exif.Make }} {{ item.exif.Model }}</span>
       </div>
-      <div v-if="item.exif.LensModel" class="flex flex-col items-center gap-1">
+      <div v-if="item.exif.LensModel" class="flex flex-col gap-1" :class="place === 'modal' ? 'items-center' : ''">
         <span>镜头</span>
         <span>{{ item.exif.LensModel }}</span>
       </div>
-      <div v-if="item.exif" class="flex flex-col items-center gap-1">
+      <div v-if="item.exif" class="flex flex-col gap-1" :class="place === 'modal' ? 'items-center' : ''">
         <span>参数</span>
-        <span class="flex items-center gap-1">
+        <span class="flex gap-1" :class="place === 'modal' ? 'items-center' : ''">
           <span v-if="item.exif.FNumber">{{ formatFNumber(item.exif.FNumber) }}</span>
           <span v-if="item.exif.ExposureTime">{{ formatExposureTime(item.exif.ExposureTime) }}</span>
           <span v-if="item.exif.ISO">ISO{{ item.exif.ISO }}</span>
         </span>
       </div>
-      <div v-if="item.exif.DateTimeOriginal" class="flex flex-col items-center gap-1 pr-8 md:pr-0">
+      <div v-if="item.exif.DateTimeOriginal" class="flex flex-col gap-1 pr-8 md:pr-0"
+        :class="place === 'modal' ? 'items-center' : ''">
         <span>拍摄时间</span>
         <span>{{ new Date(item.exif.DateTimeOriginal).toLocaleString("default") }}</span>
       </div>
-      <div class="absolute md:static right-0 h-[34px] pl-1 flex items-center justify-center"
-        :class="place === 'flow' ? 'bg-gradient-to-r from-white/0 via-white to-white dark:from-zinc-900/0 dark:via-zinc-900 dark:to-zinc-900' : 'hidden'">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 48 48" class="w-5 h-5 m-2">
-          <circle fill="currentColor" r="3" cy="24" cx="12" data-follow-fill="currentColor" />
-          <circle fill="currentColor" r="3" cy="24" cx="24" data-follow-fill="currentColor" />
-          <circle fill="currentColor" r="3" cy="24" cx="36" data-follow-fill="currentColor" />
-        </svg>
-      </div>
     </div>
+    <!--小屏幕弹框-->
     <div
       class="lg:hidden px-4 w-full fixed rounded-t-2xl left-0 right-0 bottom-0 bg-zinc-100/80 dark:bg-zinc-900/80 backdrop-blur transition-all"
       @click="isMetaPanel = !isMetaPanel" :class="{
@@ -147,12 +141,15 @@ const isMetaPanel = ref(false);
 }
 
 .collapsed {
-  transform: translateY(50vh); /* Start hidden below the screen */
-  transition: transform 0.3s ease-in-out; /* Smooth transition for the transform property */
+  transform: translateY(50vh);
+  /* Start hidden below the screen */
+  transition: transform 0.3s ease-in-out;
+  /* Smooth transition for the transform property */
 }
 
 .expanded {
-  transform: translateY(0); /* Move to the original position */
+  transform: translateY(0);
+  /* Move to the original position */
 }
 
 .infoItem {

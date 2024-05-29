@@ -32,11 +32,14 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="flex flex-col">
-    <el-image class="mx-auto" :src="item.url" :alt="item.title" :height="item.exif.height" :width="item.exif.width" lazy
+  <div :class="mode !== 'grid' ? 'flex gap-2 pb-4' : null">
+    <el-image class="ml-auto !block" :src="item.url" :alt="item.title" :height="item.exif.height" :width="item.exif.width" lazy
       :fit="mode === 'grid' ? 'cover' : 'contain'" @click="onToggleDialog(index)"
-      :class="mode === 'grid' ? 'h-full w-full object-cover object-center aspect-square gridView' : ' max-h-full aspect-[' + item.exif.width / item.exif.height + ']'" />
-    <ImageInfo :item="item" :class="mode === 'grid' ? 'hidden' : ''" :place="mode === 'grid' ? 'grid' : 'flow'" />
+      :class="mode === 'grid' ? 'h-full w-full object-cover object-center aspect-square gridView' : 'max-h-full max-w-full aspect-[' + item.exif.width / item.exif.height + ']'" />
+    <div v-if="mode !== 'grid'">
+      <ImageInfo :item="item" :class="mode === 'grid' ? 'hidden' : 'sticky top-8 w-[40vw]'"
+        :place="mode === 'grid' ? 'grid' : 'flow'" />
+    </div>
   </div>
 </template>
 

@@ -6,6 +6,9 @@ import { isImageView } from '@/stores/viewMode';
 import IconMore from './icons/IconMore.vue';
 import IconMoon from './icons/IconMoon.vue';
 import IconWaterFall from './icons/IconWaterFall.vue';
+import IconSun from './icons/IconSun.vue';
+import IconSys from './icons/IconSys.vue';
+import IconList from './icons/IconList.vue';
 
 const isMenuVisible = ref(false);
 const viewModeStore = useViewModeStore();
@@ -33,40 +36,30 @@ console.log(isImageView().mode);
 </script>
 
 <template>
-  <div class="container max-w-[1200px] mx-auto flex items-center justify-between py-6 px-6 md:px-4 lg:px-0">
-    <a href="/">
-      <h1 class="text-lg font-bold font-mono mr-auto">Photup Art</h1>
-    </a>
-    <div @click="toggleMenu" class="relative" v-if="isImageView().mode === false">
-      <IconMore />
-      <TransitionGroup>
-        <Menu v-if="isMenuVisible">
-          <div class="menuBg py-4 flex flex-col shadow-lg rounded-xl bg-white dark:bg-gray-900">
-            <button class="block px-3 py-2 hover:bg-slate-50 dark:hover:bg-slate-700" @click=toggleViewMode()>
-              <span v-if="viewModeStore.mode === 'list'">
-                <IconWaterFall class="inline-block" /> 切换网格模式
-              </span>
-              <span v-if="viewModeStore.mode === 'grid'">
-                <IconList class="inline-block" /> 切换列表模式
-              </span>
-            </button>
-            <button class="block px-3 py-2 hover:bg-slate-50 dark:hover:bg-slate-700" @click="toggleColorScheme()">
-              <span v-if="colorSchemeStore.mode === 'light'">
-                <IconMoon class="inline-block" /> 暗色模式
-              </span>
-              <span v-if="colorSchemeStore.mode === 'dark'">
-                <IconMoon class="inline-block" /> 跟随系统
-              </span>
-              <span v-if="colorSchemeStore.mode === 'system'">
-                <IconMoon class="inline-block" /> 亮色模式
-              </span>
-            </button>
-          </div>
-        </Menu>
-      </TransitionGroup>
-    </div>
+  <a href="/">
+    <h1 class="text-2xl md:text-4xl font-bold mr-auto text-center text-main">Phot.</h1>
+  </a>
+  <div class="hidden md:flex py-4 items-center justify-center">
+    <button class="block px-3 py-2 " @click=toggleViewMode()>
+      <span v-if="viewModeStore.mode === 'list'">
+        <IconList class="inline-block" />
+      </span>
+      <span v-if="viewModeStore.mode === 'grid'">
+        <IconWaterFall class="inline-block" />
+      </span>
+    </button>
+    <button class="block px-3 py-2 " @click="toggleColorScheme()">
+      <span v-if="colorSchemeStore.mode === 'light'">
+        <IconSun class="inline-block" />
+      </span>
+      <span v-if="colorSchemeStore.mode === 'dark'">
+        <IconMoon class="inline-block" />
+      </span>
+      <span v-if="colorSchemeStore.mode === 'system'">
+        <IconSys class="inline-block" />
+      </span>
+    </button>
   </div>
-
 </template>
 
 <style scoped>
