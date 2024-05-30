@@ -16,10 +16,10 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="pt-12 flex flex-col items-center justify-center">
+  <div class="flex flex-col items-center justify-center">
     <el-image class="w-fit shadow-2xl modalImageViewer" :src="item.url" :alt="item.id" :height="item.exif.height"
       :width="item.exif.width" />
-    <ImageInfo :item="item" place="modal" />
+    <ImageInfo :item="item" place="modal"/>
   </div>
 </template>
 

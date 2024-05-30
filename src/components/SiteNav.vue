@@ -120,13 +120,13 @@ function toggleModalMenu() {
 <template>
   <!-- 默认导航栏 -->
   <nav v-if="isMapView().mode == false" class="top-0 left-0 text-zinc-300 dark:text-zinc-700 z-20 text-sm">
-    <div class="container h-12 mg:h-14 mx-auto flex flex-col gap-4">
+    <div class="container w-[80%] pt-6 md:h-14 mx-auto flex md:flex-col justify-between gap-4">
       <RouterLink v-for="item in navItems" :key="item.name" :to="item.path" class="flex items-center gap-2"
         :v-bind:data-umami-event="'pressHomeNavLink' + item.name">
-        <component :is="item.icon" /> {{ item.name }}
+        <component :is="item.icon" /><span class="hidden md:inline-block">{{ item.name }}</span>
       </RouterLink>
       <RouterLink to="/map" class="flex items-center gap-2" :v-bind:data-umami-event="'pressHomeNavLinkToMap'">
-        <IconMap /><span>探索</span>
+        <IconMap /><span class="hidden md:inline-block">探索</span>
       </RouterLink>
     </div>
   </nav>

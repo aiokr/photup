@@ -32,12 +32,12 @@ export default defineComponent({
 </script>
 
 <template>
-  <div :class="mode !== 'grid' ? 'flex gap-2 pb-4' : null">
-    <el-image class="ml-auto !block" :src="item.url" :alt="item.title" :height="item.exif.height" :width="item.exif.width" lazy
-      :fit="mode === 'grid' ? 'cover' : 'contain'" @click="onToggleDialog(index)"
+  <div :class="mode !== 'grid' ? 'flex flex-col md:flex-row gap-2 pb-4' : null">
+    <el-image class="mx-auto md:mr-0 md:ml-auto !block" :src="item.url" :alt="item.title" :height="item.exif.height"
+      :width="item.exif.width" lazy :fit="mode === 'grid' ? 'cover' : 'contain'" @click="onToggleDialog(index)"
       :class="mode === 'grid' ? 'h-full w-full object-cover object-center aspect-square gridView' : 'max-h-full max-w-full aspect-[' + item.exif.width / item.exif.height + ']'" />
     <div v-if="mode !== 'grid'">
-      <ImageInfo :item="item" :class="mode === 'grid' ? 'hidden' : 'sticky top-8 w-[40vw]'"
+      <ImageInfo :item="item" :class="mode === 'grid' ? 'hidden' : 'sticky top-8 md:w-[40vw]'"
         :place="mode === 'grid' ? 'grid' : 'flow'" />
     </div>
   </div>
@@ -61,10 +61,15 @@ export default defineComponent({
 }
 
 .el-image__inner {
-  max-height: 80vh;
   width: fit-content;
   object-fit: contain;
   margin: 0 auto;
+}
+
+@media screen and (min-width: 1023px) {
+  .el-image__inner {
+    max-height: 80vh;
+  }
 }
 
 .el-rate {

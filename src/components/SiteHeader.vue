@@ -31,15 +31,15 @@ function toggleViewMode() {
   viewModeStore.toggleMode();
 }
 
-console.log(isImageView().mode);
-
 </script>
 
 <template>
   <a href="/">
     <h1 class="text-2xl md:text-4xl font-bold mr-auto text-center text-main">Phot.</h1>
   </a>
-  <div class="hidden md:flex py-4 items-center justify-center">
+  <div
+    class="fixed left-32 right-32 bottom-6 bg-white/60 dark:bg-black/60 md:bg-white/0 md:dark:bg-white/0 md:static flex px-4 py-1 rounded-full items-center justify-center z-50 backdrop-blur text-zinc-400"
+    :class="isImageView().mode === true ? 'hidden' : ''">
     <button class="block px-3 py-2 " @click=toggleViewMode()>
       <span v-if="viewModeStore.mode === 'list'">
         <IconList class="inline-block" />

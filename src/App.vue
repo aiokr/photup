@@ -72,14 +72,14 @@ const isCnUrl = () => {
 <template>
   <div :class="isMapView().mode == false ? 'flex flex-col md:flex-row relative h-screen w-screen' : 'block'">
     <div class="dark:bg-zinc-950 dark:text-gray-50"
-      :class="isMapView().mode == false ? 'w-screen h-12 md:h-screen md:w-[233px] pt-4 md:p-8' : 'static'">
+      :class="isMapView().mode == false ? 'w-screen md:h-screen md:w-[233px] py-4 md:p-8' : 'static'">
       <SiteHeader v-if="isMapView().mode == false" />
       <SiteNav :navItems="navItems" :recommendLocations="recommendLocations" />
     </div>
-    <section class="dark:bg-zinc-900 dark:text-gray-50 max-h-screen overflow-x-auto"
-      :class="isMapView().mode == false ? 'w-full max-w-[calc(100vw-233px)]' : ''">
+    <div class="dark:bg-zinc-900 dark:text-gray-50 md:max-h-screen overflow-y-auto md:overflow-x-auto"
+      :class="isMapView().mode == false ? 'w-full md:max-w-[calc(100vw-233px)]' : ''">
       <RouterView />
-    </section>
+    </div>
   </div>
   <div v-if="isMapView().mode == false && isCnUrl() == true">
     class="w-full flex justify-center items-center gap-2 text-gray-300 text-xs pb-12">

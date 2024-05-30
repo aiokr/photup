@@ -55,9 +55,10 @@ const isMetaPanel = ref(false);
 </script>
 
 <template>
-  <div class="z-0 text-[10px] text-gray-400 pb-8"  :class="place === 'modal' ? 'pt-4 md:pt-6':''">
+  <!--列表-->
+  <div class="z-0 text-[10px] text-gray-400 md:pb-8" :class="place === 'modal' ? 'md:pt-6' : ''">
     <div class="flowItemInfo items-start justify-start gap-4 whitespace-nowrap overflow-x-auto px-2"
-      :class="place === 'modal' ? 'hidden lg:flex' : 'flex flex-col'">
+      :class="place === 'modal' ? 'hidden lg:flex' : 'flex md:flex-col'">
       <div v-if="item.info.rating">
         <el-rate :model-value="item.info.rating" disabled />
       </div>
