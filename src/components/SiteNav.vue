@@ -119,13 +119,13 @@ function toggleModalMenu() {
 </script>
 <template>
   <!-- 默认导航栏 -->
-  <nav v-if="isMapView().mode == false"
-    class="top-0 left-0 text-zinc-300 dark:text-zinc-700 z-20 text-sm">
+  <nav v-if="isMapView().mode == false" class="top-0 left-0 text-zinc-300 dark:text-zinc-700 z-20 text-sm">
     <div class="container h-12 mg:h-14 mx-auto flex flex-col gap-4">
-      <RouterLink v-for="item in navItems" :key="item.name" :to="item.path" class="flex items-center gap-2">
-       <component :is="item.icon" /> {{ item.name }}
+      <RouterLink v-for="item in navItems" :key="item.name" :to="item.path" class="flex items-center gap-2"
+        :v-bind:data-umami-event="'pressHomeNavLink' + item.name">
+        <component :is="item.icon" /> {{ item.name }}
       </RouterLink>
-      <RouterLink to="/map" class="flex items-center gap-2">
+      <RouterLink to="/map" class="flex items-center gap-2" :v-bind:data-umami-event="'pressHomeNavLinkToMap'">
         <IconMap /><span>探索</span>
       </RouterLink>
     </div>
@@ -135,7 +135,8 @@ function toggleModalMenu() {
     class="fixed w-full bottom-12 z-20 flex item-center justify-center">
     <div
       class="p-3 rounded-full bg-white/90 dark:bg-zinc-900/90 backdrop-blur text-zinc-300 dark:text-zinc-500 z-20 text-sm shadow-lg flex gap-6">
-      <RouterLink v-for="item in navItems" :key="item.name" :to="item.path">
+      <RouterLink v-for="item in navItems" :key="item.name" :to="item.path"
+        :v-bind:data-umami-event="'pressMapNavLinkTo' + item.name">
         <component :is="item.icon" />
       </RouterLink>
       <button @click="toggleMapCollapsed()">
