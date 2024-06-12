@@ -71,20 +71,21 @@ const isCnUrl = () => {
 
 <template>
   <div :class="isMapView().mode == false ? 'flex flex-col md:flex-row relative h-screen w-screen' : 'block'">
-    <div class="dark:bg-zinc-950 dark:text-gray-50"
+    <div class="dark:bg-zinc-950 dark:text-gray-50 flex flex-col  justify-between"
       :class="isMapView().mode == false ? 'w-screen md:h-screen md:w-[233px] py-4 md:p-8' : 'static'">
       <SiteHeader v-if="isMapView().mode == false" />
       <SiteNav :navItems="navItems" :recommendLocations="recommendLocations" />
+      <div v-if="isMapView().mode == false && isCnUrl() == false" class="mt-auto"></div>
+      <div v-if="isMapView().mode == false && isCnUrl() == true"
+        class="hidden md:flex flex-col items-start gap-2 text-gray-300 text-[10px] mt-auto">
+        <a href="https://beian.miit.gov.cn/" target="_blank">桂ICP备17001361号</a>
+        <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=45020502000245"
+          target="_blank">桂公网安备45020502000245号</a>
+      </div>
     </div>
     <div class="dark:bg-zinc-900 dark:text-gray-50 md:max-h-screen overflow-y-auto md:overflow-x-auto"
       :class="isMapView().mode == false ? 'w-full md:max-w-[calc(100vw-233px)]' : ''">
       <RouterView />
     </div>
-  </div>
-  <div v-if="isMapView().mode == false && isCnUrl() == true">
-    class="w-full flex justify-center items-center gap-2 text-gray-300 text-xs pb-12">
-    <a href="https://beian.miit.gov.cn/" target="_blank">桂ICP备17001361号</a>
-    <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=45020502000245"
-      target="_blank">桂公网安备45020502000245号</a>
   </div>
 </template>
